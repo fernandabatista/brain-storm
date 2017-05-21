@@ -1,0 +1,51 @@
+
+body{
+	font-family: "Courier New", Courier, monospace;
+	background-color: ivory;
+}
+
+.jumbotron{
+	margin: 0;
+	margin-bottom:0;
+	padding: 1%;
+	text-align: center;
+	background-color: khaki;
+}
+.container{
+	margin-top: 35px;
+	text-align: center;
+}
+
+.panel{
+	border-radius: 0;
+}
+.panel-body{
+
+	text-align: left;
+}
+.center{
+	text-align: center;
+}
+.panel-heading{
+	color:#666;
+}
+h3{
+	text-align: center;
+}
+a:link{
+	text-decoration: none;
+
+}
+a:visited{
+	color:inherit;
+}
+.cpointer:link{
+	text-decoration: underline;
+}
+.cpointer:hover{
+	color: olive;
+	cursor:pointer;
+}
+.bd{
+	border-style: 1px solid black;
+}
