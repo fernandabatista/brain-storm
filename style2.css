@@ -49,3 +49,6 @@ a:visited{
 .bd{
 	border-style: 1px solid black;
 }
+.breadcrumb{
+	background-color: inherit;
+}

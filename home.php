@@ -1,3 +1,5 @@
+<?php require_once "links.php";?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -43,7 +45,7 @@
 
 	</div>
 	<div class='row' >
-		<a class='cpointer' href='/php/project/cadastrar.html'>Cadastrar-se</a><br/>
+		<a class='cpointer' href='<?=$path?>/cadastrar.php'>Cadastrar-se</a><br/>
 		<a class='cpointer' href='#'>Acessar como administrador</a>
 	</div>
 </div>

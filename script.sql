@@ -11,7 +11,7 @@ create table if not exists `usuario` (
     Senha varchar(45),
     Email varchar(45),
     Imagem varchar (100)
-    
+
 );
 
 create table if not exists `professor`(
@@ -21,7 +21,7 @@ create table if not exists `professor`(
 
 create table if not exists `aluno`(
 	ID_Aluno int primary key
- 
+
 );
 
 create table if not exists `curso`(
@@ -59,8 +59,8 @@ create table if not exists `lista`(
 
 );
 create table if not exists `usuario_has_curso`(
-	ID_Usuario int, 
-    ID_Curso int, 
+	ID_Usuario int,
+    ID_Curso int,
     primary key(`ID_Usuario`,`ID_Curso`)
 );
 
@@ -100,7 +100,6 @@ alter table exercicio add foreign key(ID_Assunto) references Assunto (ID_Assunto
 alter table lista add foreign key(ID_Assunto) references Assunto (ID_Assunto);
 
 alter table curso add column tag varchar(7) not null default "";
-insert into curso values (null,"BACHARELADO EM CIENCIA DA COMPUTAÇÃO","BCC");
-insert into curso values (null,"BACHARELADO EM SISTEMAS DE INFORMAÇÃO","BSI");
-insert into curso values (null,"BACHARELADO EM CIENCIA DA COMPUTAÇÃO","BCC");
-
+insert into curso values (null,"BACHARELADO EM CIENCIA DA COMPUTAï¿½ï¿½O","BCC");
+insert into curso values (null,"BACHARELADO EM SISTEMAS DE INFORMAï¿½ï¿½O","BSI");
+insert into curso values (null,"BACHARELADO EM CIENCIA DA COMPUTAï¿½ï¿½O","BCC");

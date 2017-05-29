@@ -20,6 +20,7 @@
   <div class='jumbotron'>
     <h1 >BRAIN DEBUGGER</h1>
   </div>
+  <?= breadcumb(2,$_GET['id']); ?>
 <div class='container' id='pageContent'>
   <?= exercicios($_GET['id']); ?>
 

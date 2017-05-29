@@ -1,21 +1,21 @@
 <?php
 
-
 function tableCurso(){
-  require_once 'credentials.php';    // Create connection
+  require_once 'credentials.php';
+  require_once "links.php";    // Create connection
   $conn = mysqli_connect($servername, $username, $password, $dbname);
   // Check connection
   if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
   }
-
+  mysqli_set_charset($conn,"utf8");
   $sql = "SELECT * FROM curso";
   $result = mysqli_query($conn, $sql);
   $html_result="";
   if (mysqli_num_rows($result) > 0) {
     // output data of each row
     $cont=0;
-    $link="/php/project/disciplinas.php?id=";
+    $link=$path."/disciplinas.php?id=";
     while($row = mysqli_fetch_assoc($result)) {
 
       if($cont==4){
@@ -45,20 +45,21 @@ function tableCurso(){
 }
 
 function disciplinas($id){
-  require_once 'credentials.php';
+  require "credentials.php";
+  require "links.php";
   $conn = mysqli_connect($servername, $username, $password, $dbname);
   // Check connection
   if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
   }
-
+  mysqli_set_charset($conn,"utf8");
   $sql = "SELECT * FROM disciplina WHERE ID_Curso=$id";
   $result = mysqli_query($conn, $sql);
   $html_result="";
   if (mysqli_num_rows($result) > 0) {
     // output data of each row
     $cont=0;
-    $link="/php/project/assuntos.php?id=";
+    $link=$path."/assuntos.php?id=";
     while($row = mysqli_fetch_assoc($result)) {
 
       if($cont==4){
@@ -85,20 +86,21 @@ function disciplinas($id){
 }
 
 function assuntos($id){
-  require_once 'credentials.php';
-  $conn = mysqli_connect($servername, $username, $password, $dbname);
+  require 'credentials.php';
+  require "links.php";
+    $conn = mysqli_connect($servername, $username, $password, $dbname);
   // Check connection
   if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
   }
-
+  mysqli_set_charset($conn,"utf8");
   $sql = "SELECT * FROM assunto WHERE ID_Disciplina=$id";
   $result = mysqli_query($conn, $sql);
   $html_result="";
   if (mysqli_num_rows($result) > 0) {
     // output data of each row
     $cont=0;
-    $link="/php/project/exercicios.php?id=";
+    $link=$path."/exercicios.php?id=";
     while($row = mysqli_fetch_assoc($result)) {
 
       if($cont==4){
@@ -128,19 +130,20 @@ function assuntos($id){
 
 function exercicios($id){
   require'credentials.php';
+  require_once "links.php";
   $conn = mysqli_connect($servername, $username, $password, $dbname);
   // Check connection
   if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
   }
-
+  mysqli_set_charset($conn,"utf8");
   $sql = "SELECT * FROM exercicio WHERE ID_Assunto=$id";
   $result = mysqli_query($conn, $sql);
   $html_result="";
   if (mysqli_num_rows($result) > 0) {
     // output data of each row
     $cont=0;
-    $link="/php/project/exercicios.php?id=";
+    $link=$path."/exercicios.php?id=";
     while($row = mysqli_fetch_assoc($result)) {
 
       $html_result.="  <div class='row'>
@@ -165,56 +168,63 @@ function exercicios($id){
 
 function breadcumb($tag,$id){
   require 'credentials.php';
+  require_once "links.php";
   $conn = mysqli_connect($servername, $username, $password, $dbname);
   // Check connection
   if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
   }
-    $array = array("","","");
+    mysqli_set_charset($conn,"utf8");
+  $array = array();
     while($tag>=0){
     switch($tag){
       case 2:
         $sql="select * from assunto where ID_Assunto = $id";
         $result = mysqli_query($conn, $sql);
         $row = mysqli_fetch_assoc($result);
-
-        $array[$tag]=array($row['Nome_Assunto'],$id);
-        $tag--;
         $id=$row['ID_Disciplina'];
+        echo $row['Nome_Assunto'];
+        $array[]=array($row['Nome_Assunto'],$id);
+        $tag--;
+
       break;
       case 1:
         $sql="select * from disciplina where ID_Disciplina = $id";
         $result = mysqli_query($conn, $sql);
         $row = mysqli_fetch_assoc($result);
-        $array[$tag]=array($row['Nome_Disciplina'],$id);
-        $tag--;
         $id=$row['ID_Curso'];
+        echo $row['Nome_Disciplina'];
+        $array[]=array($row['Nome_Disciplina'],$id);
+        $tag--;
+
       break;
-      case "cs":
+      case 0:
           $sql="select * from curso where ID_Curso = $id";
           $result = mysqli_query($conn, $sql);
           $row = mysqli_fetch_assoc($result);
-          $array[$tag]=array($row['Nome_Curso'],$id);
+          echo $row['Nome_Curso'];
+          $array[]=array($row['Nome_Curso'],$id);
           $tag--;
           break;
       break;
 
     }
   }
-  $html_result="<ul class='breadcrumb'>";
+  $array=array_reverse($array);
+  $html_result="<ul class='breadcrumb center'><li><a href='$path./cursos.php'>HOME</a></li>";
   foreach ($array as $key => $value) {
-      $link="/php/project/";
+      $link=$path;
       switch($key){
       case 0:
-      $link.="cursos.php";
+      $link.="/disciplinas.php";
       break;
       case 1:
 
-      $link.="disciplinas.php";
+      $link.="/assuntos.php";
       break;
       case 2:
 
-      $link.="assuntos.php";
+      $link.="/exercicios.php";
       break;
       }
       $link.="?id=".$value[1];
