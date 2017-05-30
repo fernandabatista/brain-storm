@@ -183,7 +183,7 @@ function breadcumb($tag,$id){
         $result = mysqli_query($conn, $sql);
         $row = mysqli_fetch_assoc($result);
         $id=$row['ID_Disciplina'];
-        echo $row['Nome_Assunto'];
+
         $array[]=array($row['Nome_Assunto'],$id);
         $tag--;
 
@@ -193,7 +193,7 @@ function breadcumb($tag,$id){
         $result = mysqli_query($conn, $sql);
         $row = mysqli_fetch_assoc($result);
         $id=$row['ID_Curso'];
-        echo $row['Nome_Disciplina'];
+
         $array[]=array($row['Nome_Disciplina'],$id);
         $tag--;
 
@@ -202,7 +202,7 @@ function breadcumb($tag,$id){
           $sql="select * from curso where ID_Curso = $id";
           $result = mysqli_query($conn, $sql);
           $row = mysqli_fetch_assoc($result);
-          echo $row['Nome_Curso'];
+
           $array[]=array($row['Nome_Curso'],$id);
           $tag--;
           break;
@@ -211,24 +211,29 @@ function breadcumb($tag,$id){
     }
   }
   $array=array_reverse($array);
-  $html_result="<ul class='breadcrumb center'><li><a href='$path./cursos.php'>HOME</a></li>";
-  foreach ($array as $key => $value) {
-      $link=$path;
-      switch($key){
-      case 0:
-      $link.="/disciplinas.php";
-      break;
-      case 1:
+  $html_result="<ul class='breadcrumb center'><li><a href='$path./cursos.php' class='bclink'>HOME</a></li>";
+  for($i=0;$i<count($array);$i++){
+    if($i==count($array)-1){
+      $html_result.="<li>".$array[$i][0]."</li>";
+      continue;
+    }
 
-      $link.="/assuntos.php";
-      break;
-      case 2:
+    $link=$path;
+    switch($i){
+    case 0:
+    $link.="/disciplinas.php";
+    break;
+    case 1:
 
-      $link.="/exercicios.php";
-      break;
-      }
-      $link.="?id=".$value[1];
-      $html_result.="<li><a href='$link' class='cpointer'>".$value[0]."</a></li>";
+    $link.="/assuntos.php";
+    break;
+    case 2:
+
+    $link.="/exercicios.php";
+    break;
+    }
+    $link.="?id=".$array[$i+1][1];
+    $html_result.="<li><a href='$link' class='bclink'>".$array[$i][0]."</a></li>";
   }
   echo ($html_result."</ul>");
   mysqli_close($conn);

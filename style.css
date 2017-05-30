@@ -56,3 +56,12 @@ a:visited{
 .breadcrumb{
 	background-color: inherit;
 }
+.bclink{
+	color:blue;
+	text-decoration: underline;
+}
+
+.bclink:link{
+	color:blue;
+	text-decoration: underline;
+}
