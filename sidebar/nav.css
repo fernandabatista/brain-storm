@@ -1,6 +1,4 @@
-body {
-    font-family: "Lato", sans-serif;
-}
+
 
 .bd{
 	border-style: 1px solid black;
@@ -33,7 +31,7 @@ body {
     font-size: 25px;
     color: #818181;
     display: block;
-    transition: 0.3s;
+
 }
 
 .sidenav a:hover, .offcanvas a:focus{
@@ -46,11 +44,6 @@ body {
     right: 25px;
     font-size: 36px;
     margin-left: 50px;
-}
-
-#main {
-    transition: margin-left .5s;
-    /*padding: 16px;*/
 }
 
 @media screen and (max-height: 450px) {

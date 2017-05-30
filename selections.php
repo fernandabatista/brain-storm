@@ -1,8 +1,8 @@
 <?php
 
 function tableCurso(){
-  require_once 'credentials.php';
-  require_once "links.php";    // Create connection
+  require 'credentials.php';
+  require "links.php";    // Create connection
   $conn = mysqli_connect($servername, $username, $password, $dbname);
   // Check connection
   if (!$conn) {
@@ -130,7 +130,7 @@ function assuntos($id){
 
 function exercicios($id){
   require'credentials.php';
-  require_once "links.php";
+  require "links.php";
   $conn = mysqli_connect($servername, $username, $password, $dbname);
   // Check connection
   if (!$conn) {
@@ -168,7 +168,7 @@ function exercicios($id){
 
 function breadcumb($tag,$id){
   require 'credentials.php';
-  require_once "links.php";
+  require "links.php";
   $conn = mysqli_connect($servername, $username, $password, $dbname);
   // Check connection
   if (!$conn) {
