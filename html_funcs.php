@@ -1,14 +1,26 @@
 <?php
-function nav(){
-  return '<div id="mySidenav" class="sidenav">
-    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-    <a href="#">About</a>
+function nav($aluno=TRUE){
+
+  $html_result='<div id="mySidenav" class="sidenav center">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>';
+
+  $html_result.='<span class="col-sm-2"></span><img src="aaa.png" class="img-circle col-sm-8" alt="Cinque Terre">
+                <a href="#">Editar perfil</a>
+                 <a href="#">Pesquisar</a>';
+
+  if($aluno)
+  $html_result.='</div>';
+  return $html_result;
+
+/*    <a href="#">About</a>
     <a href="#">Services</a>
     <a href="#">Clients</a>
     <a href="#">Contact</a>
-  </div>';
+  </div>';*/
 }
-  function html_header($link){
+
+
+  function html_header($link,$nav=TRUE){
 
     require 'links.php';
     echo '<!DOCTYPE html>
@@ -26,13 +38,13 @@ function nav(){
 
     </head>
     <body>
-      '.nav().'
+      '; if($nav)echo nav();
+      echo '
       <div class="jumbotron">
         <h1><span class="open"style="font-size:30px;cursor:pointer" "padding-right: 100%" onclick="openNav()">&#9776; </span>
         BRAIN DEBUGGER</h1>
       </div>';
   }
-
   function html_closing(){
     echo "</body>
     </html>";
