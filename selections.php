@@ -128,7 +128,7 @@ function assuntos($id){
   mysqli_close($conn);
 }
 
-function exercicios($id){
+function exercicios($id,$form=FALSE){
   require'credentials.php';
   require "links.php";
   $conn = mysqli_connect($servername, $username, $password, $dbname);
@@ -144,12 +144,17 @@ function exercicios($id){
     // output data of each row
     $cont=0;
     $link=$path."/exercicios.php?id=";
+    if($form)
+      $html_result.='<form action="#" method="post">';
     while($row = mysqli_fetch_assoc($result)) {
 
       $html_result.="  <div class='row'>
           <span class='col-sm-3'></span>
-          <div class='panel panel-default col-sm-6'>
-            <div class='panel-heading'>".$row['titulo']."</div>
+          <div class='panel panel-default col-sm-6'>";
+      if($form)
+        $html_result.='<input type="checkbox" name="check_list[]" value="1" class="left">';
+
+            $html_result.="<div class='panel-heading'>".$row['titulo']."</div>
             <div class='panel-body'>
             a)".$row['a1']."<br/>
             b)".$row['a2']."<br/>
@@ -159,8 +164,13 @@ function exercicios($id){
           </div>
           </div>
         </div>";
+        //if($form)
+          // $html_result.="</label>";
     }
-    echo ($html_result."</div>");
+    echo $html_result."</div>";
+    if($form){
+      echo("</form>");
+    }
   }
 
   mysqli_close($conn);
