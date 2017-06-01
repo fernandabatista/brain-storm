@@ -1,7 +1,9 @@
 function openNav() {
-    document.getElementById("mySidenav").style.width = "250px";
+    document.getElementById("mySidenav").classList.add('col-sm-3');
+    document.getElementById("mySidenav").classList.remove('col-sm-0');
 }
 
 function closeNav() {
-    document.getElementById("mySidenav").style.width = "0";
+    document.getElementById("mySidenav").classList.remove('col-sm-3');
+    document.getElementById("mySidenav").classList.add('col-sm-0');
 }

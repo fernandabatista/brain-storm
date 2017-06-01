@@ -1,12 +1,12 @@
 <?php
 function nav($aluno=TRUE){
 
-  $html_result='<div id="mySidenav" class="sidenav center">
+  $html_result='<div id="mySidenav" class="sidenav center col-sm-0">
   <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>';
 
-  $html_result.='<span class="col-sm-2"></span><img src="aaa.png" class="img-circle col-sm-8" alt="Cinque Terre">
+  $html_result.='<div class="row"><img src="aaa.png" class="col-sm-8 col-sm-offset-2 img-circle" alt="Cinque Terre">
                 <a href="#">Editar perfil</a>
-                 <a href="#">Pesquisar</a>';
+                 <a href="#">Pesquisar</a></div>';
 
   if($aluno)
   $html_result.='</div>';
@@ -38,12 +38,13 @@ function nav($aluno=TRUE){
 
     </head>
     <body>
-      '; if($nav)echo nav();
+      ';
       echo '
       <div class="jumbotron">
         <h1><span class="open"style="font-size:30px;cursor:pointer" "padding-right: 100%" onclick="openNav()">&#9776; </span>
         BRAIN DEBUGGER</h1>
       </div>';
+      if($nav)echo nav();
   }
   function html_closing(){
     echo "</body>
