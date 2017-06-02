@@ -71,3 +71,8 @@ a:visited{
 	height: 20px;
 	width: 20px;
 }
+.impbtn{
+	border-radius:0;
+	border-width: 1px;
+	border-color: darkgrey;
+}

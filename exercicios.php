@@ -7,11 +7,14 @@
 ?>
   <div class='container' id='pageContent'>
   <div class='row'>
-    <a href='<?=$path?>/lista.php'><button type='button' class='btn btn-default col-sm-6 col-sm-offset-3'><span class="glyphicon glyphicon-plus fleft">
-                </span>NOVO EXERCÍCIO</button></a>
+    <a href='#'
+      <button type='button' class='btn btn-default col-sm-6 col-sm-offset-3'><span class="glyphicon glyphicon-plus fleft">
+        </span>NOVO EXERCÍCIO</button></a>
   </div>
+
   <div class='row'>
-    <button type='button' class='btn btn-default col-sm-6 col-sm-offset-3'><span class="glyphicon glyphicon-plus fleft"></span>NOVA LISTA</button>
+    <a href='<?=$path."/lista.php?id=".$_GET["id"]?>'><button type='button' class='btn btn-default col-sm-6 col-sm-offset-3'>
+      <span class="glyphicon glyphicon-plus fleft"></span>NOVA LISTA</button></a>
   </div>
   <br/>
   <?= exercicios($_GET['id']); ?>

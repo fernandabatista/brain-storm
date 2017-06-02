@@ -140,19 +140,20 @@ function exercicios($id,$form=FALSE){
   $sql = "SELECT * FROM exercicio WHERE ID_Assunto=$id";
   $result = mysqli_query($conn, $sql);
   $html_result="";
-  if (mysqli_num_rows($result) > 0) {
+  $num_rows=mysqli_num_rows($result);
+  if ($num_rows > 0) {
     // output data of each row
     $cont=0;
     $link=$path."/exercicios.php?id=";
     if($form)
-      $html_result.='<form action="#" method="post">';
+      $html_result.='<form action="cria_lista.php" method="post">';
     while($row = mysqli_fetch_assoc($result)) {
 
       $html_result.="  <div class='row'>
           <span class='col-sm-3'></span>
           <div class='panel panel-default col-sm-6'>";
       if($form)
-        $html_result.='<input type="checkbox" name="check_list[]" value="1" class="left">';
+        $html_result.='<input type="checkbox" name="check_list[]" value="'.$row['ID_Exercicio'].'" class="left">';
 
             $html_result.="<div class='panel-heading'>".$row['titulo']."</div>
             <div class='panel-body'>
@@ -169,6 +170,7 @@ function exercicios($id,$form=FALSE){
     }
     echo $html_result."</div>";
     if($form){
+      echo("<button type='submit' class='btn btn-default impbtn col-sm-4 col-sm-offset-4'>PRONTO</button>");
       echo("</form>");
     }
   }
@@ -250,7 +252,7 @@ function breadcumb($tag,$id){
   }
 
   function professores(){
-    require_once 'credentials.php';
+    require 'credentials.php';
     $conn = mysqli_connect($servername, $username, $password, $dbname);
     // Check connection
     if (!$conn) {

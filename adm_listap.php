@@ -17,9 +17,9 @@
 	<!-- <div><h3 class='slog'>LOREM IPSUM DOLOR SIT AMET</h3></div> -->
 	<div class='row'>
 		<span class='col-sm-3'></span>
-		<?php 
+		<?php
 			professores();
-			
+
 		?>
 		<!-- <form class='col-sm-6 '>
 		<div class="form-group">

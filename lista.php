@@ -6,5 +6,6 @@
 ?>
   <div class='container' id='pageContent'>
   <?= exercicios($_GET['id'],true); ?>
+
   </div>
 <?php html_closing() ?>
