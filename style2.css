@@ -61,3 +61,13 @@ a:visited{
 	color:blue;
 	text-decoration: underline;
 }
+.left{
+	float:right;
+	height: 20px;
+	width: 20px;
+}
+.fleft{
+	float:left;
+	height: 20px;
+	width: 20px;
+}
