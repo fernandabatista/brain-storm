@@ -1,3 +1,4 @@
+<?php require "selections.php" ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,6 +17,10 @@
 	<!-- <div><h3 class='slog'>LOREM IPSUM DOLOR SIT AMET</h3></div> -->
 	<div class='row'>
 		<span class='col-sm-3'></span>
+		<?php 
+			professores();
+			
+		?>
 		<!-- <form class='col-sm-6 '>
 		<div class="form-group">
 			<label>Professores:</label>
@@ -31,20 +36,20 @@
 			</ul>
 		</div> -->
 
-		<div class="col-sm-6">
-  			<h4 class="center">Professores</h4>
-  			<div class="list-group">
-    			<a href="file:///C:/Users/User/sistema-web/adm_showprof.html" class="list-group-item">
-      				<p class="list-group-item-text">Professor 1</p>
-    			</a>
-   				<a href="#" class="list-group-item">
-      	 			<p class="list-group-item-text">Professor 2</p>
-    			</a>
-    			<a href="#" class="list-group-item">
-      				<p class="list-group-item-text">Professor 3</p>
-    			</a>
-  			</div>
-		</div>
+		<!--<div class="col-sm-6">-->
+  <!--			<h4 class="center">Professores</h4>-->
+  <!--			<div class="list-group">-->
+  <!--  			<a href="file:///C:/Users/User/sistema-web/adm_showprof.html" class="list-group-item">-->
+  <!--    				<p class="list-group-item-text">Professor 1</p>-->
+  <!--  			</a>-->
+  <!-- 				<a href="#" class="list-group-item">-->
+  <!--    	 			<p class="list-group-item-text">Professor 2</p>-->
+  <!--  			</a>-->
+  <!--  			<a href="#" class="list-group-item">-->
+  <!--    				<p class="list-group-item-text">Professor 3</p>-->
+ <!--   			</a>-->
+ <!-- 			</div>-->
+	<!--	</div>-->
 	</div>
 </body>
 </html>
