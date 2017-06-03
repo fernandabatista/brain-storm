@@ -6,9 +6,13 @@ function nav($aluno=TRUE){
 
   $html_result.='<div class="row"><img src="'.imagem($_SESSION['user']).'"
           class="col-sm-8 col-sm-offset-2 img-circle imgp" alt="Cinque Terre"></div>
+              <a href="#">Home</a>
                 <a href="#">Editar perfil</a>
-                 <a href="#">Pesquisar</a>';
+                 <a href="#">Pesquisar</a>
+                  <a href="#">Minhas listas</a>
+                   <a href="#">Criar '.$_SESSION['cloc'].'</a>';
   if($aluno)
+
   $html_result.='</div>';
   return $html_result;
 

@@ -8,6 +8,7 @@
     $user_name = $_SESSION["name"];
     $tipo = $_SESSION["tipo"];
     $cid = $_SESSION["cid"];
+    $cloc = $_SESSION["cloc"];
   }
   else{
     $login = false;

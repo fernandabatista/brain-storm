@@ -16,6 +16,8 @@ function tableCurso(){
   $result = mysqli_query($conn, $sql);
   $html_result="";
   $_SESSION['cid']=0;
+  ECHO "CURSO";
+  $_SESSION["cloc"] = "curso";
   if (mysqli_num_rows($result) > 0) {
     // output data of each row
     $cont=0;
@@ -62,7 +64,7 @@ function disciplinas($id){
   $result = mysqli_query($conn, $sql);
   $html_result="";
   $_SESSION['cid']=$id;
-
+  $_SESSION["cloc"] = "disciplina";
   if (mysqli_num_rows($result) > 0) {
     // output data of each row
     $cont=0;
@@ -106,6 +108,7 @@ function assuntos($id){
   $result = mysqli_query($conn, $sql);
   $html_result="";
   $_SESSION['cid']=$id;
+  $_SESSION["cloc"] = "assunto";
   if (mysqli_num_rows($result) > 0) {
     // output data of each row
     $cont=0;
@@ -307,6 +310,7 @@ function login($_email,$_pw){
           $_SESSION["name"] = $user["Nome_Usuario"];
           $_SESSION["tipo"] = $user["Aluno"];
           $_SESSION["cid"] = 0;
+          $_SESSION["cloc"] = "curso";
           header("Location: " . $path . "/cursos.php");
           exit();
         }else {
