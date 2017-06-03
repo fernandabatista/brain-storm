@@ -153,21 +153,16 @@ function exercicios($id,$form=FALSE){
   $sql = "SELECT * FROM exercicio WHERE ID_Assunto=$id";
   $result = mysqli_query($conn, $sql);
   $html_result="";
-<<<<<<< HEAD
-=======
   $_SESSION['cid']=$id;
->>>>>>> c8b92bf6672c814a82ce888236a252467a741558
   $num_rows=mysqli_num_rows($result);
   if ($num_rows > 0) {
     // output data of each row
     $cont=0;
     $link=$path."/exercicios.php?id=";
     if($form)
-<<<<<<< HEAD
       $html_result.='<form action="cria_lista.php" method="post">';
-=======
-      $html_result.='<form action="'.$path.'/cria_lista.php?id="'.$id.' method="post">';
->>>>>>> c8b92bf6672c814a82ce888236a252467a741558
+
+
     while($row = mysqli_fetch_assoc($result)) {
 
       $html_result.="  <div class='row'>
@@ -270,9 +265,9 @@ function breadcumb($tag,$id){
   }
   echo ($html_result."</ul>");
   mysqli_close($conn);
-  }
+}
 
-  function professores(){
+function professores(){
     require 'credentials.php';
     $conn = mysqli_connect($servername, $username, $password, $dbname);
     // Check connection
