@@ -2,16 +2,20 @@
 
 function tableCurso(){
   require 'credentials.php';
-  require "links.php";    // Create connection
+  require "links.php";
+  require "authenticate.php";    // Create connection
   $conn = mysqli_connect($servername, $username, $password, $dbname);
   // Check connection
   if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
   }
   mysqli_set_charset($conn,"utf8");
-  $sql = "SELECT * FROM curso";
+  $sql = "SELECT c.* from usuario u JOIN
+  usuario_has_Curso uc ON u.ID_Usuario = uc.ID_Usuario JOIN
+  curso c ON c.ID_Curso = uc.ID_Curso WHERE uc.ID_Usuario = ".$user;
   $result = mysqli_query($conn, $sql);
   $html_result="";
+  $_SESSION['cid']=0;
   if (mysqli_num_rows($result) > 0) {
     // output data of each row
     $cont=0;
@@ -47,6 +51,7 @@ function tableCurso(){
 function disciplinas($id){
   require "credentials.php";
   require "links.php";
+  require "authenticate.php";
   $conn = mysqli_connect($servername, $username, $password, $dbname);
   // Check connection
   if (!$conn) {
@@ -56,6 +61,8 @@ function disciplinas($id){
   $sql = "SELECT * FROM disciplina WHERE ID_Curso=$id";
   $result = mysqli_query($conn, $sql);
   $html_result="";
+  $_SESSION['cid']=$id;
+
   if (mysqli_num_rows($result) > 0) {
     // output data of each row
     $cont=0;
@@ -88,6 +95,7 @@ function disciplinas($id){
 function assuntos($id){
   require 'credentials.php';
   require "links.php";
+  require "authenticate.php";
     $conn = mysqli_connect($servername, $username, $password, $dbname);
   // Check connection
   if (!$conn) {
@@ -97,6 +105,7 @@ function assuntos($id){
   $sql = "SELECT * FROM assunto WHERE ID_Disciplina=$id";
   $result = mysqli_query($conn, $sql);
   $html_result="";
+  $_SESSION['cid']=$id;
   if (mysqli_num_rows($result) > 0) {
     // output data of each row
     $cont=0;
@@ -131,6 +140,7 @@ function assuntos($id){
 function exercicios($id,$form=FALSE){
   require'credentials.php';
   require "links.php";
+  require "authenticate.php";
   $conn = mysqli_connect($servername, $username, $password, $dbname);
   // Check connection
   if (!$conn) {
@@ -140,13 +150,21 @@ function exercicios($id,$form=FALSE){
   $sql = "SELECT * FROM exercicio WHERE ID_Assunto=$id";
   $result = mysqli_query($conn, $sql);
   $html_result="";
+<<<<<<< HEAD
+=======
+  $_SESSION['cid']=$id;
+>>>>>>> c8b92bf6672c814a82ce888236a252467a741558
   $num_rows=mysqli_num_rows($result);
   if ($num_rows > 0) {
     // output data of each row
     $cont=0;
     $link=$path."/exercicios.php?id=";
     if($form)
+<<<<<<< HEAD
       $html_result.='<form action="cria_lista.php" method="post">';
+=======
+      $html_result.='<form action="'.$path.'/cria_lista.php?id="'.$id.' method="post">';
+>>>>>>> c8b92bf6672c814a82ce888236a252467a741558
     while($row = mysqli_fetch_assoc($result)) {
 
       $html_result.="  <div class='row'>
@@ -276,4 +294,52 @@ function breadcumb($tag,$id){
     mysqli_close($conn);
   }
 
+function login($_email,$_pw){
+    require "authenticate.php";
+    require'credentials.php';
+    require "links.php";
+    $conn = mysqli_connect($servername, $username, $password, $dbname);
+    $email = mysqli_real_escape_string($conn,$_POST["email"]);
+    $password = mysqli_real_escape_string($conn,$_POST["pwd"]);
+    // $password = md5($password);
+    $sql = "SELECT ID_Usuario,Senha, Email, Nome_Usuario,Aluno FROM usuario
+            WHERE email = '$email'";
+
+    $result = mysqli_query($conn, $sql);
+    if($result){
+      if (mysqli_num_rows($result) > 0) {
+        $user = mysqli_fetch_assoc($result);
+        if ($user["Senha"] == $password) {
+          $_SESSION["user"] = $user["ID_Usuario"];
+          $_SESSION["name"] = $user["Nome_Usuario"];
+          $_SESSION["tipo"] = $user["Aluno"];
+          $_SESSION["cid"] = 0;
+          header("Location: " . $path . "/cursos.php");
+          exit();
+        }else {
+          echo 'dados incorretos';
+        }
+      }
+    }
+}
+
+function imagem($id){
+  require 'credentials.php';
+  require "links.php";
+  require "authenticate.php";
+  $conn = mysqli_connect($servername, $username, $password, $dbname);
+  // Check connection
+  if (!$conn) {
+    die("Connection failed: " . mysqli_connect_error());
+  }
+  mysqli_set_charset($conn,"utf8");
+  $sql = "SELECT Imagem from Usuario Where ID_Usuario = $id";
+
+  $result = mysqli_query($conn, $sql);
+  $html_result="";
+  if (mysqli_num_rows($result) > 0) {
+    $row = mysqli_fetch_assoc($result);
+    return ($row['Imagem']);
+  }
+}
 ?>

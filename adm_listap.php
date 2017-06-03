@@ -5,10 +5,8 @@
   nav();
 ?>
 <div class='container' id='pageContent'>
-
         <?php
-			professores();
+			professores() 
 		?>
-
 </div>
 <?php echo html_closing();?>

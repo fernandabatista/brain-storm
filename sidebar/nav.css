@@ -19,7 +19,7 @@
     background-color: #111;
     overflow-x: hidden;
     /*transition: 0.5s;*/
-    padding-top: 60px;
+    padding-top: 6%;
 }
 
 .sidenav a {
@@ -54,4 +54,7 @@
 
 .col-sm-0{
 	width: 0;
+}
+.imgp{
+	margin-bottom: 6%;
 }

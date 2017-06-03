@@ -1,13 +1,13 @@
 <?php
 function nav($aluno=TRUE){
-
+  require "authenticate.php";
   $html_result='<div id="mySidenav" class="sidenav center col-sm-0">
   <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>';
 
-  $html_result.='<div class="row"><img src="aaa.png" class="col-sm-8 col-sm-offset-2 img-circle" alt="Cinque Terre">
+  $html_result.='<div class="row"><img src="'.imagem($_SESSION['user']).'"
+          class="col-sm-8 col-sm-offset-2 img-circle imgp" alt="Cinque Terre"></div>
                 <a href="#">Editar perfil</a>
-                 <a href="#">Pesquisar</a></div>';
-
+                 <a href="#">Pesquisar</a>';
   if($aluno)
   $html_result.='</div>';
   return $html_result;
