@@ -1,55 +1,12 @@
-<?php require "selections.php" ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<title>Bootstrap Example</title>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-	<link rel="stylesheet" href="style.css">
-
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-</head>
-<body>
-	<div class='jumbotron'><h1 class='bd'>BRAIN DEBUGGER</h1></div>
-	<!-- <div><h3 class='slog'>LOREM IPSUM DOLOR SIT AMET</h3></div> -->
-	<div class='row'>
-		<span class='col-sm-3'></span>
-		<?php
-			professores();
-
+<?php
+  require_once "selections.php";
+  require_once "html_funcs.php";
+  html_header("style.css");
+  nav();
+?>
+<div class='container' id='pageContent'>
+        <?php
+			professores() 
 		?>
-		<!-- <form class='col-sm-6 '>
-		<div class="form-group">
-			<label>Professores:</label>
-			<input type="text" class="form-control center" id="name">
-		</div>
-		</form> -->
-		<!-- <div class="col-sm-6">
-
-			<ul class="list-group">
-				<li class="list-group-item">First item</li>
-  				<li class="list-group-item">Second item</li>
-  				<li class="list-group-item">Third item</li>
-			</ul>
-		</div> -->
-
-		<!--<div class="col-sm-6">-->
-  <!--			<h4 class="center">Professores</h4>-->
-  <!--			<div class="list-group">-->
-  <!--  			<a href="file:///C:/Users/User/sistema-web/adm_showprof.html" class="list-group-item">-->
-  <!--    				<p class="list-group-item-text">Professor 1</p>-->
-  <!--  			</a>-->
-  <!-- 				<a href="#" class="list-group-item">-->
-  <!--    	 			<p class="list-group-item-text">Professor 2</p>-->
-  <!--  			</a>-->
-  <!--  			<a href="#" class="list-group-item">-->
-  <!--    				<p class="list-group-item-text">Professor 3</p>-->
- <!--   			</a>-->
- <!-- 			</div>-->
-	<!--	</div>-->
-	</div>
-</body>
-</html>
+</div>
+<?php echo html_closing();?>

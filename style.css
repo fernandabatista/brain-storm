@@ -65,3 +65,9 @@ a:visited{
 	color:blue;
 	text-decoration: underline;
 }
+.icon{
+	float: right;
+}
+.lprof{
+	text-align: left;
+}
