@@ -9,7 +9,7 @@ create table if not exists `usuario` (
     Nome_Usuario varchar(45),
     Senha varchar(45),
     Email varchar(45),
-    Imagem varchar (100),
+    Imagem varchar (100) not null default "img/img_default.png",
 	Aluno boolean
 );
 
@@ -49,8 +49,8 @@ create table if not exists `lista`(
 
 );
 create table if not exists `usuario_has_curso`(
-	ID_Usuario int,
-    ID_Curso int,
+	ID_Usuario int, 
+    ID_Curso int, 
     primary key(`ID_Usuario`,`ID_Curso`)
 );
 
@@ -118,3 +118,6 @@ INSERT INTO `iac`.`disciplina` (`ID_Disciplina`, `Nome_Disciplina`, `ID_Curso`) 
 INSERT INTO `iac`.`assunto` (`Nome_Assunto`, `ID_Disciplina`) VALUES ('DETERMINANTES', '6');
 INSERT INTO `iac`.`exercicio` (`titulo`, `a1`, `a2`, `a3`, `a4`, `a5`, `Correta`, `Negativos`, `Positivos`, `ID_Assunto`) VALUES ('Calcule o determinante da seguinte matriz:
 \n\r1 0 2\n', '0', '1', '2', '-18', '4', '4', '0', '0', '4');
+
+INSERT INTO `iac`.`usuario_haS_curso` (`ID_Usuario`, `ID_Curso`) VALUES ('3', '1');
+INSERT INTO `iac`.`usuario_haS_curso` (`ID_Usuario`, `ID_Curso`) VALUES ('3', '2');
