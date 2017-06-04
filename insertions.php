@@ -45,4 +45,27 @@
     exit();
 
   }
+
+  function escore($id,$c){
+    require "credentials.php";
+    require "authenticate.php";
+    require "links.php";
+    $conn = mysqli_connect($servername, $username, $password, $dbname);
+    // Check connection
+    if (!$conn) {
+      die("Connection failed: " . mysqli_connect_error());
+    }
+    $sql = "select now()";
+    $result = mysqli_query($conn, $sql);
+    $now = mysqli_fetch_assoc($result);
+    $now = $now['now()'];
+    $sql = "INSERT INTO usuario_faz_lista VALUES (null,'".$_SESSION['user']."',$id,'$now',$c)";
+    echo $sql;
+    mysqli_query($conn, $sql);
+
+    mysqli_close($conn);
+
+    //header("Location: " . $path . "/verlista.php?id=".$lid);
+    //exit();
+  }
 ?>

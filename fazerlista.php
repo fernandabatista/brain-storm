@@ -6,6 +6,9 @@
   require "authenticate.php";
   html_header("style2.css");
   echo breadcumb(2,$_SESSION['cid']);
+  if($_SERVER['REQUEST_METHOD']=='POST'){
+    comparar($_SESSION['cid'],$_POST['selected']);
+  }
 ?>
   <div class='container' id='pageContent'>
   <?php

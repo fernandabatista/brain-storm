@@ -213,7 +213,7 @@ function exerciciosLista($id,$do=false){
   lista_has_exercicio le ON e.ID_Exercicio = le.ID_Exercicio JOIN
   lista l ON l.ID_Lista = le.ID_Lista where le.ID_Lista=$id;";
   if($do){
-    $html_result.="<form action='#' method='post'>";
+    $html_result.="<form action='fazerlista.php' method='post'>";
   }
   $result = mysqli_query($conn, $sql);
   while($row = mysqli_fetch_assoc($result)) {
@@ -467,5 +467,33 @@ function listas($id){
   }
 
   mysqli_close($conn);
+}
+
+function comparar($id,$respostas){
+  require 'credentials.php';
+  require "links.php";
+  require "authenticate.php";
+  require_once "insertions.php";
+  $conn = mysqli_connect($servername, $username, $password, $dbname);
+  // Check connection
+  if (!$conn) {
+    die("Connection failed: " . mysqli_connect_error());
+  }
+  $html_result="";
+  $corretas = $erradas = array();
+  $c=0;
+  mysqli_set_charset($conn,"utf8");
+  $sql = "select correta from exercicio e JOIN
+  lista_has_exercicio le ON e.ID_Exercicio = le.ID_Exercicio JOIN
+  lista l ON l.ID_Lista = le.ID_Lista where le.ID_Lista=$id;";
+  $result = mysqli_query($conn, $sql);
+  $num_rows= mysqli_num_rows($result);
+  $i=0;
+  while($row = mysqli_fetch_assoc($result)) {
+      if($row["correta"]==$respostas [i]){
+        $c++;
+      }
+  }
+  escore($id,$c);
 }
 ?>
