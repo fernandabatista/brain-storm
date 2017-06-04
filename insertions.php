@@ -25,4 +25,24 @@
      exit();
 
   }
+
+  function cria_exercicio($ass,$enunc,$a,$correta){
+    require "credentials.php";
+    require "authenticate.php";
+    require "links.php";
+    $conn = mysqli_connect($servername, $username, $password, $dbname);
+    // Check connection
+    if (!$conn) {
+      die("Connection failed: " . mysqli_connect_error());
+    }
+    $sql = "INSERT INTO exercicio VALUES (null,'$enunc','$a[0]','$a[1]','$a[2]','$a[3]','$a[4]',$correta,0,0,$ass)";
+    mysqli_query($conn, $sql);
+    echo $sql;
+
+    // $lid=mysqli_insert_id($conn); //suspeito
+
+    header("Location: " . $path . "/exercicios.php?id=".$ass);
+    exit();
+
+  }
 ?>

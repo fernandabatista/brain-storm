@@ -400,6 +400,7 @@ function imagem($id){
   }
 }
 
+
 function calls($act,$id,$bc=false){
 
   switch ($act) {
@@ -449,7 +450,9 @@ function listas($id){
 
               "<div class='row'>
                 <a href='".$path."/fazerlista.php?id=".$row['ID_Lista']."'>
-                <button type='button' class='btn btn-default col-sm-3 col-sm-offset-3'>
+                <button type='button'
+
+                class='btn btn-default col-sm-3 col-sm-offset-3'>
                 <span class='glyphicon glyphicon-floppy-disk fleft'>
                 </span>FAZER</button></a>
                 <button type='button' class='btn btn-default col-sm-3'>

@@ -17,7 +17,7 @@
   </div>
 
   <div class='row'>
-    <a href='#'
+    <a href='create_exercicios.php?id=<?=$_GET['id']?>'>
     <button type='button' class='btn btn-default col-sm-6 col-sm-offset-3'><span class="glyphicon glyphicon-plus fleft">
     </span>NOVO EXERCÍCIO</button></a>
   </div>

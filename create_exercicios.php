@@ -1,8 +1,12 @@
 <?php
-  require "selections.php";
+  require_once "selections.php";
+  require "insertions.php";
   require "html_funcs.php";
+  require "authenticate.php";
   html_header("style.css");
-  nav();
+  if($_SERVER['REQUEST_METHOD']=='POST'){
+    cria_exercicio($_SESSION['cid'],$_POST['name'],$_POST['a'],$_POST['optradio']);
+  }
 ?>
 <div class='container' id='pageContent'>
 
@@ -12,26 +16,41 @@
 		<form class='col-sm-6 col-sm-offset-3' action='create_exercicios.php' method='post'>
 		<div class="form-group ">
 			<label for="enunciado">Enunciado</label>
-			<textarea class="form-control" rows="5" id="exercicio"></textarea>
+			<textarea name='name' class="form-control" rows="5" id="exercicio"></textarea>
 		</div>
 		<label for="alternativas">Alternativas</label>
 		<p>*Selecionar a correta</p>
 		<div class="radio">
-			<label><input type="radio" name="optradio"><input name= 'email' type="email" class="form-group" id="email"></label>
+			<label>
+        <input type="radio" name="optradio" value=1>
+        <input name= 'a[]' type="text" class="form-group" value="" id="a1">
+      </label>
 		</div>
 		<div class="radio">
-			<label><input type="radio" name="optradio"><input name= 'email' type="email" class="form-group" id="email"></label>
+			<label>
+        <input type="radio" name="optradio"value=2 >
+        <input name= 'a[]' type="text" class="form-group" value="" id="a2">
+      </label>
 		</div>
 		<div class="radio">
-			<label><input type="radio" name="optradio"><input name= 'email' type="email" class="form-group" id="email"></label>
+			<label>
+        <input type="radio" name="optradio"value=3>
+        <input name= 'a[]' type="text" class="form-group" value="" id="a3">
+      </label>
 		</div>
 		<div class="radio">
-			<label><input type="radio" name="optradio"><input name= 'email' type="email" class="form-group" id="email"></label>
+			<label>
+        <input type="radio" name="optradio"value=4>
+        <input name= 'a[]' type="text" class="form-group" value="" id="a4">
+      </label>
 		</div>
 		<div class="radio">
-			<label><input type="radio" name="optradio"><input name= 'email' type="email" class="form-group" id="email"></label>
+			<label>
+        <input type="radio" name="optradio"value=5>
+        <input name= 'a[]' type="text" class="form-group" value="" id="a5">
+      </label>
 		</div>
-		
+
 		<button type="submit" class="btn btn-default">ENVIAR</button>
 		</form>
 	</div>
