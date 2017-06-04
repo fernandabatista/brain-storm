@@ -1,16 +1,17 @@
 <?php
 function nav($aluno=TRUE){
   require "authenticate.php";
+  require "links.php";
   $html_result='<div id="mySidenav" class="sidenav center col-sm-0">
   <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>';
 
   $html_result.='<div class="row"><img src="'.imagem($_SESSION['user']).'"
           class="col-sm-8 col-sm-offset-2 img-circle imgp" alt="Cinque Terre"></div>
-              <a href="#">Home</a>
+              <a href="'.$path.'/index.php?act=curso">Home</a>
                 <a href="#">Editar perfil</a>
                  <a href="#">Pesquisar</a>
                   <a href="#">Minhas listas</a>
-                   <a href="#">Criar '.$_SESSION['cloc'].'</a>';
+                   <a href="#">Criar</a>';
   if($aluno)
 
   $html_result.='</div>';

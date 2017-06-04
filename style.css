@@ -15,7 +15,7 @@ body{
 	margin-top: 35px;
 	text-align: center;
 }
-.panel:hover{
+.hoverable:hover{
 
 	background-color: lightgrey;
 	cursor: pointer;
@@ -70,4 +70,8 @@ a:visited{
 }
 .lprof{
 	text-align: left;
+}
+.fleft{
+	float:left;
+
 }

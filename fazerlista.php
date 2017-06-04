@@ -1,8 +1,5 @@
 <?php
-  $ins=false;
-  if(!empty($_POST['check_list'])){
-    $ins=true;
-  }
+
   require_once "selections.php";
   require_once "insertions.php";
   require_once "html_funcs.php";
@@ -12,7 +9,7 @@
 ?>
   <div class='container' id='pageContent'>
   <?php
-  if($ins)
-      cria_lista($_SESSION['cid'],$_POST['check_list'])?>
+    exerciciosLista($_GET['id'],true);
+  ?>
   </div>
 <?php html_closing() ?>
