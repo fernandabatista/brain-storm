@@ -10,7 +10,7 @@ function nav($aluno=TRUE){
               <a href="'.$path.'/index.php?act=curso">Home</a>
                 <a href="#">Editar perfil</a>
                  <a href="#">Pesquisar</a>
-                  <a href="#">Minhas listas</a>
+                  <a href="'.$path.'/index.php?act=listas">Minhas listas</a>
                    <a href="#">Criar</a>';
   if($aluno)
 

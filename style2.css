@@ -77,3 +77,6 @@ a:link:active, a:visited:active {
 	border-width: 1px;
 	border-color: darkgrey;
 }
+.uncenter{
+	text-align:left;
+}

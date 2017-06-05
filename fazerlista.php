@@ -5,13 +5,18 @@
   require_once "html_funcs.php";
   require "authenticate.php";
   html_header("style2.css");
-  echo breadcumb(2,$_SESSION['cid']);
+  //echo breadcumb(2,$_SESSION['cid']);
   if($_SERVER['REQUEST_METHOD']=='POST'){
-    comparar($_SESSION['cid'],$_POST['selected']);
+    // echo $_POST['selected'][0];
+    // echo $_POST['selected'][1];
+    $s=comparar($_SESSION['cid'],$_POST['selected']);
   }
 ?>
   <div class='container' id='pageContent'>
   <?php
+  if($_SERVER['REQUEST_METHOD']=='POST')
+    echo $s;
+  else
     exerciciosLista($_GET['id'],true);
   ?>
   </div>

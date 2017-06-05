@@ -215,6 +215,7 @@ function exerciciosLista($id,$do=false){
   if($do){
     $html_result.="<form action='fazerlista.php' method='post'>";
   }
+  $_SESSION['cid']=$id;
   $result = mysqli_query($conn, $sql);
   while($row = mysqli_fetch_assoc($result)) {
     $html_result.="  <div class='row'>
@@ -264,6 +265,15 @@ function breadcumb($tag,$id){
   $array = array();
     while($tag>=0){
     switch($tag){
+      case 3:
+        $sql="select * from lista where ID_Lista = $id";
+        $result = mysqli_query($conn, $sql);
+        $row = mysqli_fetch_assoc($result);
+        $id=$row['ID_Assunto'];
+        $array[]=array('LISTAS',$id);
+        $tag--;
+
+      break;
       case 2:
         $sql="select * from assunto where ID_Assunto = $id";
         $result = mysqli_query($conn, $sql);
@@ -400,7 +410,6 @@ function imagem($id){
   }
 }
 
-
 function calls($act,$id,$bc=false){
 
   switch ($act) {
@@ -416,7 +425,12 @@ function calls($act,$id,$bc=false){
       return $bc?breadcumb(1,$id):assuntos($id);
       break;
      case 'listas':
-      return $bc?breadcumb(2,$id):listas($id);
+
+     if($id===0){
+
+       return listas(0,true);
+     }
+      return $bc?breadcumb(3,$id):listas($id);
       break;
     default:
       echo "deee";
@@ -424,7 +438,7 @@ function calls($act,$id,$bc=false){
   }
 }
 
-function listas($id){
+function listas($id,$minhas=false){
   require'credentials.php';
   require "links.php";
   require "authenticate.php";
@@ -434,10 +448,20 @@ function listas($id){
     die("Connection failed: " . mysqli_connect_error());
   }
   mysqli_set_charset($conn,"utf8");
-  $sql = "SELECT * FROM lista WHERE ID_Assunto=$id";
+  $sql="";
+
+  if($minhas){
+    $sql .= "select l.* from lista l JOIN
+          usuario_has_lista ul ON l.ID_Lista= ul.ID_Lista JOIN
+          usuario u ON u.ID_Usuario = ul.ID_Usuario where
+          ul.ID_Usuario=".$_SESSION['user'];
+  }else{
+    $sql .= "SELECT * FROM lista WHERE ID_Assunto=$id";
+    $_SESSION['cid']=$id;
+  }
   $result = mysqli_query($conn, $sql);
   $html_result="";
-  $_SESSION['cid']=$id;
+
   $num_rows=mysqli_num_rows($result);
   if ($num_rows > 0) {
     // output data of each row
@@ -448,17 +472,24 @@ function listas($id){
           <div class='panel panel-default col-sm-6 col-sm-offset-3'>
             <div class='panel-heading'>".$row['Nome_Lista'].
 
-              "<div class='row'>
-                <a href='".$path."/fazerlista.php?id=".$row['ID_Lista']."'>
-                <button type='button'
+              "<div class='row'>";
 
-                class='btn btn-default col-sm-3 col-sm-offset-3'>
-                <span class='glyphicon glyphicon-floppy-disk fleft'>
-                </span>FAZER</button></a>
-                <button type='button' class='btn btn-default col-sm-3'>
-                <span class='glyphicon glyphicon-pencil fleft'>
-                </span>SALVAR</button>
-            </div>
+                if(!$minhas)
+                  $html_result.="class='btn btn-default col-sm-3 col-sm-offset-3'>
+                  <span class='glyphicon glyphicon-floppy-disk fleft'>
+                  </span>SALVAR</button></a>";
+
+                if($_SESSION['tipo'])
+                  $html_result.="<a href='".$path."/relatoriolista.php?id=".$row['ID_Lista']."'>
+                  <button type='button' class='btn btn-default col-sm-4'>
+                  RELATÓRIO</button></a>";
+                else
+                  $html_result.="<a href='".$path."/fazerlista.php?id=".$row['ID_Lista']."'>
+                  <button type='button' class='btn btn-default col-sm-4'>
+                  <span class='glyphicon glyphicon-pencil fleft'>
+                  </span>FAZER</button></a>";
+
+            $html_result.="</div>
             </div>
           </div>
         </div>";
@@ -480,7 +511,7 @@ function comparar($id,$respostas){
     die("Connection failed: " . mysqli_connect_error());
   }
   $html_result="";
-  $corretas = $erradas = array();
+  $corretas = $erradas = "";
   $c=0;
   mysqli_set_charset($conn,"utf8");
   $sql = "select correta from exercicio e JOIN
@@ -488,12 +519,63 @@ function comparar($id,$respostas){
   lista l ON l.ID_Lista = le.ID_Lista where le.ID_Lista=$id;";
   $result = mysqli_query($conn, $sql);
   $num_rows= mysqli_num_rows($result);
+  // echo "aaaa";
   $i=0;
   while($row = mysqli_fetch_assoc($result)) {
-      if($row["correta"]==$respostas [i]){
+
+      if($row["correta"]==$respostas[$i]){
+        $corretas.=($i+1)." ";
         $c++;
+
+      }else{
+        $erradas.=($i+1)." ";
       }
+      $i++;
   }
   escore($id,$c);
+  $html_result.="<h2>VOCÊ ACERTOU $c DE $num_rows!</h2><br/>";
+  return $html_result."<h4>CORRETA(S):</h4>$corretas
+  <h4>ERRADA(S):</h4>$erradas";
+
+
+}
+
+function relatorio($id){
+  require 'credentials.php';
+  require "links.php";
+  require "authenticate.php";
+  require_once "insertions.php";
+  $conn = mysqli_connect($servername, $username, $password, $dbname);
+  // Check connection
+  if (!$conn) {
+    die("Connection failed: " . mysqli_connect_error());
+  }
+  $html_result='<table class="table table-condensed col-sm-6 ">
+    <thead>
+      <tr>
+        <th>Aluno</th>
+        <th>Data</th>
+        <th>Escore</th>
+      </tr>
+    </thead>
+    <tbody>';
+  $c=0;
+  mysqli_set_charset($conn,"utf8");
+  $sql = "select u.Nome_Usuario, ul.Escore, ul.Data_ from lista l JOIN
+        usuario_faz_lista ul ON l.ID_Lista= ul.ID_Lista JOIN
+        usuario u ON u.ID_Usuario = ul.ID_Usuario where ul.ID_Lista=$id";
+  $result = mysqli_query($conn, $sql);
+  $num_rows= mysqli_num_rows($result);
+  // echo "aaaa";
+  $i=0;
+  while($row = mysqli_fetch_assoc($result)) {
+      $html_result.="<tr class='uncenter'><td>".$row['Nome_Usuario'].
+                    "</td><td>".$row['Data_'].
+                    "</td><td>".$row['Escore'].
+                    "</td></tr>";
+  }
+  $html_result.="</tbody></table>";
+  echo $html_result;
+  mysqli_close($conn);
 }
 ?>

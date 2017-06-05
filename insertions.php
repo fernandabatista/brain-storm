@@ -60,7 +60,6 @@
     $now = mysqli_fetch_assoc($result);
     $now = $now['now()'];
     $sql = "INSERT INTO usuario_faz_lista VALUES (null,'".$_SESSION['user']."',$id,'$now',$c)";
-    echo $sql;
     mysqli_query($conn, $sql);
 
     mysqli_close($conn);
