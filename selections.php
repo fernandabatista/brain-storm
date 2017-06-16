@@ -64,6 +64,27 @@ function disciplinas($id){
   $html_result="";
   $_SESSION['cid']=$id;
   $_SESSION["cloc"] = "disciplina";
+  $link=$path."/create_disciplina.php";
+  $html_result.='<div><h4 class="slog">Nova Disciplina</h4></div>
+  <div class="row center">
+
+    <form class="col-sm-6 col-sm-offset-3" action="create_exercicios.php" method="post">
+    <div class="form-group ">
+      <label for="enunciado">Nome</label>
+      <input name="name" class="form-control" rows="5" id="disciplina">
+    </div>
+    <button type="submit" class="btn btn-default">ENVIAR</button>
+    </form>
+  </div><br><br>';
+  $html_result.='<div class="col-sm-3">
+      <div class="panel panel-default hoverable">
+        <a href='.$link.'>
+        <div class="panel-heading">
+          <h4>NOVA DISCIPLINA</h4>
+        </div>
+        </a>
+      </div>
+      </div>';
   if (mysqli_num_rows($result) > 0) {
     // output data of each row
     $cont=0;
