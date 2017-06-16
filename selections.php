@@ -1,5 +1,81 @@
 <?php
 
+function pesquisa($table,$text){
+  require 'credentials.php';
+  require "links.php";
+  require "authenticate.php";    // Create connection
+  $conn = mysqli_connect($servername, $username, $password, $dbname);
+  // Check connection
+  if (!$conn) {
+    die("Connection failed: " . mysqli_connect_error());
+  }
+  mysqli_set_charset($conn,"utf8");
+
+
+
+  $at="ID_".$table;
+  $atnome="Nome_".$table;
+  $sql = "SELECT * FROM $table where $atnome like '%$text%'" ;
+  //echo $sql;
+  $result = mysqli_query($conn, $sql);
+  $html_result="";
+
+
+  if (mysqli_num_rows($result) > 0) {
+    // output data of each row
+    $cont=0;
+    $tag="";
+    $link=$path."/index.php?act=disciplina&id=";
+    $html_result.="<h3 class='center'>RESULTADOS DA PESQUISA:</h3><br/>";
+    while($row = mysqli_fetch_assoc($result)) {
+
+      if(!isset($row['Tag'])){
+
+        if(!isset($row['ID_Curso'])){
+          $sql2="SELECT ID_Curso from Disciplina
+            where ID_Disciplina=".$row['ID_Disciplina'];
+            $result2 = mysqli_query($conn, $sql2);
+            $row2=mysqli_fetch_assoc($result2);
+            $idc=$row2['ID_Curso'];
+        }else{
+          //echo "aaa";
+          $idc=$row['ID_Curso'];
+
+        }
+        $sql2="SELECT Tag from Curso
+          where ID_Curso=".$idc;
+          $result2 = mysqli_query($conn, $sql2);
+          $row2=mysqli_fetch_assoc($result2);
+          $tag=$row2['Tag'];
+      } else {
+        $tag=$row['Tag'];
+      }
+
+      if($cont==4){
+        $html_result.="</div>";
+        $cont=0;
+      }
+      if($cont==0){
+        $html_result.="<div class='row'>";
+      }
+      $html_result.=' <div class="col-sm-3 col-md-3">
+      <div class="panel panel-default hoverable">
+      <a href="#">
+      <div class="panel-heading">'.$row[$atnome].'
+      <div class="panel-body">'.$tag.
+      '</div>
+      </div>
+      </div>
+      </a></div>';
+      $cont++;
+
+    }
+  }
+  else {
+  }
+  return ($html_result."</div>");
+  mysqli_close($conn);
+}
 function tableCurso(){
   require 'credentials.php';
   require "links.php";
