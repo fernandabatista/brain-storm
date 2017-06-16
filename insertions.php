@@ -67,4 +67,38 @@
     //header("Location: " . $path . "/verlista.php?id=".$lid);
     //exit();
   }
+
+ function cria_disciplina($ass,$nome){
+    require "credentials.php";
+    require "authenticate.php";
+    require "links.php";
+    $conn = mysqli_connect($servername, $username, $password, $dbname);
+    // Check connection
+    if (!$conn) {
+      die("Connection failed: " . mysqli_connect_error());
+    }
+    $sql = "INSERT INTO disciplina VALUES (null,'$nome')";
+    mysqli_query($conn, $sql);
+}
+
+function perfil($ass, $nome. $email, $pwd, $imagem){
+    require "credentials.php";
+    require "authenticate.php";
+    require "links.php";
+    $conn = mysqli_connect($servername, $username, $password, $dbname);
+    // Check connection
+    if (!$conn) {
+      die("Connection failed: " . mysqli_connect_error());
+    }
+    //foto
+    if (isset($_FILES['imagem'])) {
+        $extensao = strtolower(substr($_FILES['arquivo']['name'] , -4));
+        $novo_nome = md5(time()). $extensao;
+        $diretorio = "/sistema-web/img/";
+
+        move_uploaded_file($_FILES['arquivo']['tmp-name'], $diretorio.$novo_nome);
+   
+    $sql = "INSERT INTO user (Imagem) VALUES ('&imagem')"; 
+}
+}
 ?>
