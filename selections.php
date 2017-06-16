@@ -471,23 +471,47 @@ function listas($id,$minhas=false){
         <div class='row'>
           <div class='panel panel-default col-sm-6 col-sm-offset-3'>
             <div class='panel-heading'>".$row['Nome_Lista'].
-
               "<div class='row'>";
 
-                if(!$minhas)
-                  $html_result.="class='btn btn-default col-sm-3 col-sm-offset-3'>
-                  <span class='glyphicon glyphicon-floppy-disk fleft'>
-                  </span>SALVAR</button></a>";
+                $buttons=$links=array();
 
-                if($_SESSION['tipo'])
-                  $html_result.="<a href='".$path."/relatoriolista.php?id=".$row['ID_Lista']."'>
-                  <button type='button' class='btn btn-default col-sm-4'>
-                  RELATÓRIO</button></a>";
-                else
-                  $html_result.="<a href='".$path."/fazerlista.php?id=".$row['ID_Lista']."'>
-                  <button type='button' class='btn btn-default col-sm-4'>
-                  <span class='glyphicon glyphicon-pencil fleft'>
-                  </span>FAZER</button></a>";
+
+                if($_SESSION['tipo']){
+                    $buttons['pencil']="FAZER";
+                    $links[]=$path."/fazerlista.php?id=".$row['ID_Lista'];
+                }else if($minhas){
+                    $buttons['registration-mark']="RELATÓRIO";
+                    $links[]=$path."/relatoriolista.php?id=".$row['ID_Lista'];
+                }
+
+                // $buttons['eye-open']="VER";
+                // $links[]=$path."/verlista.php?id=".$row['ID_Lista'];
+
+                if(!$minhas){
+                  $buttons['floppy-disk']="SALVAR";
+                  $links[]="#";
+                }else{
+                  $buttons['trash']="EXCLUIR";
+                  $links[]="#";
+                }
+
+                $n=0;
+                $offset=6-count($buttons)*2;
+
+                foreach ($buttons as $key => $value) {
+                  $html_result.="<a href='".$links[$n]."'>
+                  <button type='button' class='btn btn-default col-sm-4 col-sm-offset-$offset'>
+                  <span class='glyphicon glyphicon-".$key." fleft'>
+                  </span>".$value."</button></a>";
+
+                  $n++;
+                  $offset=0;
+                }
+
+                /*$html_result.="<a href='".$path."/fazerlista.php?id=".$row['ID_Lista']."'>
+                <button type='button' class='btn btn-default col-sm-4 col-sm-offset-4'>
+                <span class='glyphicon glyphicon-pencil fleft'>
+                </span>FAZER</button></a>";*/
 
             $html_result.="</div>
             </div>

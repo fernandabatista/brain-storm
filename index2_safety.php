@@ -1,11 +1,13 @@
   <?php
-    require_once "selections.php";
+  //  require_once "selections.php";
+    $msg="aaa";
+    mail("guabiner@gmail.com","DEU BOM",$msg,"From: guabiner@gmail.com");
    ?>
 
 
   <!DOCTYPE html>
   <html lang="en">
-  <head>
+  <!-- <head>
     <title>Bootstrap Example</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -67,5 +69,5 @@
     </div>
 
   </div>
-  </body>
+  </body> -->
 </html>
