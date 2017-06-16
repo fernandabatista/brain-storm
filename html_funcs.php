@@ -9,9 +9,10 @@ function nav($aluno=TRUE){
           class="col-sm-8 col-sm-offset-2 img-circle imgp" alt="Cinque Terre"></div>
               <a href="'.$path.'/index.php?act=curso">Home</a>
                 <a href="#">Editar perfil</a>
-                 <a href="#">Pesquisar</a>
-                  <a href="'.$path.'/index.php?act=listas">Minhas listas</a>
-                   <a href="#">Criar</a>';
+                 <a href="'.$path."/pesquisar.php".'">Pesquisar</a>
+                  <a href="'.$path.'/index.php?act=listas">Minhas listas</a>';
+                   if(!$_SESSION['tipo'])
+                    $html_result.='<a href="#">Criar</a>';
   if($aluno)
 
   $html_result.='</div>';
