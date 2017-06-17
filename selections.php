@@ -11,12 +11,17 @@ function pesquisa($table,$text){
   }
   mysqli_set_charset($conn,"utf8");
 
-
-
   $at="ID_".$table;
   $atnome="Nome_".$table;
+
+  $sql = "SELECT ID_Curso FROM usuario_has_Curso where ID_Usuario=".$_SESSION['user'] ;
+  $result = mysqli_query($conn, $sql);
+  $cursos=array();
+  while($row = mysqli_fetch_assoc($result)) {
+    $cursos[]=$row['ID_Curso'];
+  }
+
   $sql = "SELECT * FROM $table where $atnome like '%$text%'" ;
-  //echo $sql;
   $result = mysqli_query($conn, $sql);
   $html_result="";
 
@@ -24,11 +29,14 @@ function pesquisa($table,$text){
   if (mysqli_num_rows($result) > 0) {
     // output data of each row
     $cont=0;
-    $tag="";
-    $link=$path."/index.php?act=disciplina&id=";
-    $html_result.="<h3 class='center'>RESULTADOS DA PESQUISA:</h3><br/>";
-    while($row = mysqli_fetch_assoc($result)) {
+    $idc;
 
+
+    $html_result.="<h3 class='center'>RESULTADOS DA PESQUISA POR ".strtoupper($table). ":</h3><br/>";
+
+    while($row = mysqli_fetch_assoc($result)) {
+      $dis="";
+      $tag="";
       if(!isset($row['Tag'])){
 
         if(!isset($row['ID_Curso'])){
@@ -47,8 +55,15 @@ function pesquisa($table,$text){
           $result2 = mysqli_query($conn, $sql2);
           $row2=mysqli_fetch_assoc($result2);
           $tag=$row2['Tag'];
-      } else {
-        $tag=$row['Tag'];
+        }
+        else {
+         $idc=$row['ID_Curso'];
+       }
+
+      $link=$path."/index.php?act=scurso&id=".$idc;
+      if(in_array($idc,$cursos)){
+        $dis="disabled";
+        $link="#";
       }
 
       if($cont==4){
@@ -59,15 +74,18 @@ function pesquisa($table,$text){
         $html_result.="<div class='row'>";
       }
       $html_result.=' <div class="col-sm-3 col-md-3">
-      <div class="panel panel-default hoverable">
-      <a href="#">
-      <div class="panel-heading">'.$row[$atnome].'
-      <div class="panel-body">'.$tag.
-      '</div>
+      <div class="panel panel-default">
+
+      <div class="panel-heading"><h6>'.$tag.
+      '</h6><h4>'.$row[$atnome].'
+      </h4><div class="panel-body">
+      <a href="'.$link.'" class="'.$dis.'"><button class="btn btn-default '.$dis.'">
+      <span class="glyphicon glyphicon-floppy-disk"></span> SALVAR CURSO</button></a></div>
       </div>
       </div>
-      </a></div>';
+      </div>';
       $cont++;
+
 
     }
   }
@@ -76,6 +94,7 @@ function pesquisa($table,$text){
   return ($html_result."</div>");
   mysqli_close($conn);
 }
+
 function tableCurso(){
   require 'credentials.php';
   require "links.php";
@@ -141,26 +160,17 @@ function disciplinas($id){
   $_SESSION['cid']=$id;
   $_SESSION["cloc"] = "disciplina";
   $link=$path."/create_disciplina.php";
-  $html_result.='<div><h4 class="slog">Nova Disciplina</h4></div>
-  <div class="row center">
-
-    <form class="col-sm-6 col-sm-offset-3" action="create_exercicios.php" method="post">
-    <div class="form-group ">
-      <label for="enunciado">Nome</label>
-      <input name="name" class="form-control" rows="5" id="disciplina">
-    </div>
-    <button type="submit" class="btn btn-default">ENVIAR</button>
-    </form>
-  </div><br><br>';
-  $html_result.='<div class="col-sm-3">
-      <div class="panel panel-default hoverable">
-        <a href='.$link.'>
-        <div class="panel-heading">
-          <h4>NOVA DISCIPLINA</h4>
-        </div>
-        </a>
-      </div>
-      </div>';
+  // $html_result.='
+  // <br><br>';
+  // $html_result.='<div class="col-sm-3">
+  //     <div class="panel panel-default hoverable">
+  //       <a href='.$link.'>
+  //       <div class="panel-heading">
+  //         <h4>NOVA DISCIPLINA</h4>
+  //       </div>
+  //       </a>
+  //     </div>
+  //     </div>';
   if (mysqli_num_rows($result) > 0) {
     // output data of each row
     $cont=0;
@@ -530,7 +540,7 @@ function calls($act,$id,$bc=false){
       return $bc?breadcumb(3,$id):listas($id);
       break;
     default:
-      echo "deee";
+      echo "";
       break;
   }
 }

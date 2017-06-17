@@ -75,3 +75,6 @@ a:visited{
 	float:left;
 
 }
+.hidden{
+	visibility: hidden;
+}
