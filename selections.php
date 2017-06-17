@@ -1,5 +1,83 @@
 <?php
 
+function select($table,$id=0){
+  require 'credentials.php';
+  require "links.php";
+  require "authenticate.php";
+
+  $tables = array('curso' => "Curso",'disciplina'=>"Disciplina",
+      'assunto'=>"Assunto",'exercicio'=>"Exercicio");
+
+  $conn = mysqli_connect($servername, $username, $password, $dbname);
+  if (!$conn) {
+    die("Connection failed: " . mysqli_connect_error());
+  }
+
+  mysqli_set_charset($conn,"utf8");
+
+  $at="ID_".$table;
+  $header=4;
+  $keys=array_keys($tables);
+  $pos=array_search($table,$keys);
+
+  $atnome="Nome_".$tables[$table];
+
+
+  if($table=="curso"){
+    $header=1;
+    $sql = "SELECT c.* from usuario u JOIN
+    usuario_has_Curso uc ON u.ID_Usuario = uc.ID_Usuario JOIN
+    curso c ON c.ID_Curso = uc.ID_Curso WHERE uc.ID_Usuario = ".$_SESSION['user'];
+  }else{
+    $at="ID_".$tables[$keys[$pos-1]];
+    $sql = "SELECT * FROM $table where $at=$id" ;
+  }
+  $result = mysqli_query($conn, $sql);
+  $html_result="";
+
+
+  if (mysqli_num_rows($result) > 0) {
+    $tagn="";
+    $smname="";
+    $cont=0;
+    $idc;
+    $atid="ID_".$tables[$table];
+    while($row = mysqli_fetch_assoc($result)) {
+      if(isset($row['Tag'])){
+        $tagn=$row['Tag'];
+        $smname=$row[$atnome];
+      }else{
+        $tagn=$row[$atnome];
+      }
+
+      $link=$path."/index.php?act=".$keys[$pos+1]."&id=".$row[$atid];
+
+      if($cont==4){
+        $html_result.="</div>";
+        $cont=0;
+      }
+      if($cont==0){
+        $html_result.="<div class='row'>";
+      }
+      $html_result.=' <div class="col-sm-3">
+      <div class="panel panel-default hoverable">
+      <a href='.$link.'>
+      <div class="panel-heading"><h'.$header.'>'.$tagn.'
+      </h'.$header.'><div class="panel-body">'.$smname.
+      '</div>
+      </div>
+      </div>
+      </a></div>';
+      $cont++;
+    }
+  }
+  else {
+  }
+  return ($html_result."</div>");
+  mysqli_close($conn);
+
+}
+
 function pesquisa($table,$text){
   require 'credentials.php';
   require "links.php";
@@ -522,11 +600,11 @@ function calls($act,$id,$bc=false){
   switch ($act) {
 
     case 'curso':
-      return tableCurso();
+      return select($act);
       break;
     case 'disciplina':
 
-      return $bc?breadcumb(0,$id):disciplinas($id);
+      return $bc?breadcumb(0,$id):select($act,$id);
       break;
      case 'assunto':
       return $bc?breadcumb(1,$id):assuntos($id);
