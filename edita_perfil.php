@@ -6,9 +6,12 @@
   require_once "authenticate.php";
   html_header("style.css");
 //  echo breadcumb(0,$_GET['id']);
+  $_POST['nomea'] = $_SESSION['name']; //nomea = nome atual e depois nome atualizado
    if($_SERVER['REQUEST_METHOD']=='POST'){
-    perfil($_SESSION['cid'],$_POST['nome'], $_POST['email'], $_POST['pwd']);
+    perfil($_SESSION['cid'],$_POST['nome'], $_POST['pwd']);
+  $_POST['nomea'] = $_POST['nome'];
   }
+
 ?>
   <div class='container' id='pageContent'>
 
@@ -21,15 +24,7 @@
 		<div class="form-group ">
 			<label for="nome">Nome:</label>
 			<input name= 'nome' type="text" class="form-control center" id="user" 
-			value="<?= $_SESSION['name'] ?>">
-		</div>
-		<div class="form-group ">
-			<label for="email">E-mail:</label>
-			<input name= 'email' type="email" class="form-control center" id="email">
-		</div>
-		<div class="form-group">
-			<label for="pwd">Senha Antiga:</label>
-			<input name= 'pwd' type="password" class="form-control center" id="pwd">
+			value="<?= $_POST['nomea'] ?>">
 		</div>
 		<div class="form-group">
 			<label for="pwd">Nova Senha:</label>

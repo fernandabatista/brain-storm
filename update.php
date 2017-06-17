@@ -1,4 +1,4 @@
-<?php function perfil($ass, $nome, $email, $pwd){
+<?php function perfil($ass, $nome, $pwd){
     require "credentials.php";
     require "authenticate.php";
     require "links.php";
@@ -8,10 +8,9 @@
       die("Connection failed: " . mysqli_connect_error());
     }
     $id = mysqli_insert_id($conn);
-    $sql = "UPDATE usuario SET Nome_Usuario='$nome' WHERE id = '".$_SESSION['user']."'";
-  //  $sql = "SELECT id FROM usuario WHERE Nome_Usuario = '".$_SESSION['user']."'";
-    mysqli_query($conn, $sql);
-    echo $sql;
+    $sql = "UPDATE usuario SET Nome_Usuario='$nome', Senha='$pwd' WHERE ID_Usuario = '".$_SESSION['user']."'";
+    //mysqli_query($conn, $sql);
+    //echo $sql;
         //foto
     // if (isset($_FILES['imagem'])) {
     //     $extensao = strtolower(substr($_FILES['arquivo']['name'] , -4));
@@ -22,5 +21,12 @@
     //     move_uploaded_file($_FILES['arquivo']['tmp-name'], $diretorio.$novo_nome);
 
     // $sql = "INSERT INTO user (Imagem) VALUES ('&imagem')";
+    if (mysqli_query($conn, $sql)) {
+    echo "Record updated successfully";
+} else {
+    echo "Error updating record: " . mysqli_error($conn);
+}
+
+mysqli_close($conn);
 }
 ?>
