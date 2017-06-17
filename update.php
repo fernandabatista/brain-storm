@@ -7,7 +7,9 @@
     if (!$conn) {
       die("Connection failed: " . mysqli_connect_error());
     }
-    $sql = "UPDATE usuario set Nome_Usuario='$nome' where id = $ass";
+    $id = mysqli_insert_id($conn);
+    $sql = "UPDATE usuario SET Nome_Usuario='$nome' WHERE id = '".$_SESSION['user']."'";
+  //  $sql = "SELECT id FROM usuario WHERE Nome_Usuario = '".$_SESSION['user']."'";
     mysqli_query($conn, $sql);
     echo $sql;
         //foto

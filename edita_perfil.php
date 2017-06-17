@@ -20,7 +20,8 @@
 			<!-- <input type="file" required name="imagem"> -->
 		<div class="form-group ">
 			<label for="nome">Nome:</label>
-			<input name= 'nome' type="text" class="form-control center" id="user">
+			<input name= 'nome' type="text" class="form-control center" id="user" 
+			value="<?= $_SESSION['name'] ?>">
 		</div>
 		<div class="form-group ">
 			<label for="email">E-mail:</label>
