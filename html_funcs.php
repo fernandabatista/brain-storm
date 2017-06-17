@@ -8,7 +8,7 @@
     $html_result.='<div class="row"><img src="'.imagem($_SESSION['user']).'"
             class="col-sm-8 col-sm-offset-2 img-circle imgp" alt="Foto de perfil"></div>
                 <a href="'.$path.'/index.php?act=curso">Home</a>
-                  <a href="#">Editar perfil</a>
+                  <a href="'.$path.'/edita_perfil.php">Editar perfil</a>
                    <a href="'.$path."/pesquisar.php".'">Pesquisar</a>
                     <a href="'.$path.'/index.php?act=listas">Minhas listas</a>';
                      if(!$_SESSION['tipo'])

@@ -8,7 +8,7 @@
 //  echo breadcumb(0,$_GET['id']);
   $_POST['nomea'] = $_SESSION['name']; //nomea = nome atual e depois nome atualizado
    if($_SERVER['REQUEST_METHOD']=='POST'){
-    perfil($_SESSION['cid'],$_POST['nome'], $_POST['pwd']);
+    perfil($_SESSION['cid'],$_POST['nome'], $_POST['pwd'], $_FILES['arquivo']);
   $_POST['nomea'] = $_POST['nome'];
   }
 
@@ -20,7 +20,7 @@
 		<form class='col-sm-6 col-sm-offset-3' action='edita_perfil.php' method='post' enctype="multipart/form-data">
 		<div class="form-group">
 			<label for="foto">Avatar: </label>
-			<!-- <input type="file" required name="imagem"> -->
+			<input type="file" required name="arquivo">
 		<div class="form-group ">
 			<label for="nome">Nome:</label>
 			<input name= 'nome' type="text" class="form-control center" id="user" 
