@@ -19,16 +19,29 @@
 
 <div class='container' id='pageContent'>
 
-  <?php if($_GET['act']=="curso"||$_GET['act']=="disciplina"||$_GET['act']=="assunto"):?>
+  <?php if($act=="curso"||$act=="disciplina"||$act=="assunto"):?>
 
     <div class='row'>
-      <form id="hdnform" class='col-sm-4 col-sm-offset-4 hidden'  action='pesquisar.php' method='post'>
+      <form id="hdnform" class='col-sm-4 col-sm-offset-4 hidden'
+       action="<?= $_SERVER['PHP_SELF'] ?>" method='post'>
+
+        <input name="id" value="<?=$id?>" type="hidden"/>
+        <input name="act" value="<?=$act?>" type="hidden"/>
+
+        <?php if($act == "curso"): ?>
+          <div class="form-group " >
+            <label for="nome">Abreviação:</label>
+            <input type="text" name="tag"  class="form-control"></input>
+          </div>
+        <?php endif ?>
+
         <div class="form-group" >
-          <label for="nome">Nome:</label>
+            <label for="nome">Nome:</label>
           <div class="input-group">
 
-      			<input name= 'nome' type="text"
-            class="form-control" id="" required>
+        		<input name= 'nome' type="text"
+              class="form-control" id="" required>
+            </input>
             <span class="input-group-btn">
               <button class="btn btn-secondary" type="submit">
                 <span class='glyphicon glyphicon-ok'></span>
