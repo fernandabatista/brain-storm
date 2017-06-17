@@ -68,7 +68,7 @@
     //exit();
   }
 
- function cria_disciplina($ass,$nome){
+  function cria_disciplina($ass,$nome){
     require "credentials.php";
     require "authenticate.php";
     require "links.php";
@@ -79,7 +79,8 @@
     }
     $sql = "INSERT INTO disciplina VALUES (null,'$nome')";
     mysqli_query($conn, $sql);
-}
+  }
+
 
 function perfil($ass, $nome, $email, $pwd){
     require "credentials.php";
@@ -99,9 +100,23 @@ function perfil($ass, $nome, $email, $pwd){
     //     $novo_nome = md5(time()). $extensao;
     //     $diretorio = "/sistema-web/img/";
 
-    //     move_uploaded_file($_FILES['arquivo']['tmp-name'], $diretorio.$novo_nome);
-   
-    // $sql = "INSERT INTO user (Imagem) VALUES ('&imagem')"; 
+
+        move_uploaded_file($_FILES['arquivo']['tmp-name'], $diretorio.$novo_nome);
+
+    $sql = "INSERT INTO user (Imagem) VALUES ('&imagem')";
 }
 
+  function salva_curso($id){
+    require "credentials.php";
+    require "authenticate.php";
+    require "links.php";
+    $conn = mysqli_connect($servername, $username, $password, $dbname);
+    // Check connection
+    if (!$conn) {
+      die("Connection failed: " . mysqli_connect_error());
+    }
+    $sql = "INSERT INTO usuario_has_Curso VALUES
+      (".$_SESSION['user'].",$id)";
+    mysqli_query($conn, $sql);
+  }
 ?>

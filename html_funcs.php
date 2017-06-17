@@ -38,10 +38,11 @@ function nav($aluno=TRUE){
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
       <link rel="stylesheet" type="text/css" href="'.$link.'">
       <link rel="stylesheet" type="text/css" href="'.$path.'/sidebar/nav.css">
-      <script src="'.$path.'/sidebar/sidebar.js"></script>
+
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
+      <script src="'.$path.'/sidebar/sidebar.js"></script>
+      
     </head>
     <body>
       ';
