@@ -1,5 +1,5 @@
 <?php
-  require "insertions.php";
+  require "update.php";
 
   require "selections.php";
   require_once "html_funcs.php";
