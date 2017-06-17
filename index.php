@@ -3,6 +3,15 @@
   require "insertions.php";
   require "html_funcs.php";
   html_header("style.css");
+  if($_SERVER['REQUEST_METHOD']=="POST"){
+    $tagid=0;
+    if(isset($_POST['tag']))
+      $tagid=$_POST['tag'];
+    else
+      $tagid=$_POST['id'];
+
+    novo($_POST['act'],$tagid,$_POST['nome']);
+  }
   $id=0;
   $act=$_GET['act'];
   if(isset($_GET['id'])){
@@ -29,9 +38,9 @@
         <input name="act" value="<?=$act?>" type="hidden"/>
 
         <?php if($act == "curso"): ?>
-          <div class="form-group " >
+          <div class="form-group  " >
             <label for="nome">Abreviação:</label>
-            <input type="text" name="tag"  class="form-control"></input>
+            <input type="text" name="tag"  class="form-control center"></input>
           </div>
         <?php endif ?>
 

@@ -93,5 +93,36 @@
     $sql = "INSERT INTO usuario_has_Curso VALUES
       (".$_SESSION['user'].",$id)";
     mysqli_query($conn, $sql);
+    //echo $sql;
+    mysqli_close($conn);
   }
+
+  function novo($act,$tagid,$nome){
+    require "credentials.php";
+    require "authenticate.php";
+    require "links.php";
+    $conn = mysqli_connect($servername, $username, $password, $dbname);
+    // Check connection
+    if (!$conn) {
+      die("Connection failed: " . mysqli_connect_error());
+    }
+    mysqli_set_charset($conn,"utf8");
+    $sql = "INSERT INTO $act VALUES (null,'$nome','$tagid')";
+    mysqli_query($conn, $sql);
+
+
+
+    $headeraux="";
+    if($act=="curso"){
+      echo "aa:".mysqli_insert_id($conn);
+
+      salva_curso(mysqli_insert_id($conn));
+    }else{
+      $headeraux="&id=".$tagid;
+    }
+    mysqli_close($conn);
+    header("Location: " . $_SERVER['PHP_SELF']."?act=".$act.$headeraux);
+    exit();
+  }
+
 ?>
