@@ -60,7 +60,7 @@
         </div>
       </form>
       <button class="btn btn-default col-sm-4 col-sm-offset-4"id="hide">
-        CRIAR <?= strtoupper($_GET['act'])?>
+        CRIAR <?= strtoupper($act)?>
       </button>
     </div>
     <br><br>
