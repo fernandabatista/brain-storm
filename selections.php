@@ -42,6 +42,7 @@ function select($table,$id=0){
     $cont=0;
     $idc;
     $atid="ID_".$tables[$table];
+
     while($row = mysqli_fetch_assoc($result)) {
       if(isset($row['Tag'])){
         $tagn=$row['Tag'];
@@ -50,8 +51,11 @@ function select($table,$id=0){
         $tagn=$row[$atnome];
       }
 
-      $link=$path."/index.php?act=".$keys[$pos+1]."&id=".$row[$atid];
-
+    if($table=="assunto"&&$_SESSION['tipo']){
+        $link="index.php?act=listas&id=".$row[$atid];
+      }else{
+        $link="index.php?act=".$keys[$pos+1]."&id=".$row[$atid];
+    }
       if($cont==4){
         $html_result.="</div>";
         $cont=0;
@@ -73,8 +77,9 @@ function select($table,$id=0){
   }
   else {
   }
-  return ($html_result."</div>");
   mysqli_close($conn);
+  return ($html_result."</div>");
+
 
 }
 
@@ -260,6 +265,15 @@ function exercicios($id,$form=FALSE){
 
       $html_result.="  <div class='row'>
         <div class='panel panel-default col-sm-6 col-sm-offset-3'>";
+      $html_result.="
+      <span class='btns' id=s".$row['ID_Exercicio'].">
+      <a href='javascript:;' class='vote_up green' id='".$row['ID_Exercicio']."'>
+      <span class='glyphicon glyphicon-thumbs-up'></span>
+      </a><span id='pos'>".$row['Positivos']."</span>
+      <a href='javascript:;' class='vote_down red' id='".$row['ID_Exercicio']."'>
+      <span class='glyphicon glyphicon-thumbs-down'></span>
+      </a><span id='neg'>".$row['Negativos']."</span>
+      </span>";
       if($form)
         $html_result.='<input type="checkbox" name="check_list[]" value="'.$row['ID_Exercicio'].'" class="left">';
 

@@ -31,6 +31,7 @@
     require "authenticate.php";
     require "links.php";
     $conn = mysqli_connect($servername, $username, $password, $dbname);
+    mysqli_set_charset($conn,'utf8');
     // Check connection
     if (!$conn) {
       die("Connection failed: " . mysqli_connect_error());
@@ -41,7 +42,7 @@
 
     // $lid=mysqli_insert_id($conn); //suspeito
 
-    header("Location: " . $path . "/exercicios.php?id=".$ass);
+    header("Location: index.php?act=exercicio&id=".$ass);
     exit();
 
   }

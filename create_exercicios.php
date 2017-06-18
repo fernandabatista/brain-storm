@@ -5,7 +5,7 @@
   require "authenticate.php";
   html_header("style.css");
   if($_SERVER['REQUEST_METHOD']=='POST'){
-    cria_exercicio($_SESSION['cid'],$_POST['name'],$_POST['a'],$_POST['optradio']);
+    cria_exercicio($_POST['id'],$_POST['name'],$_POST['a'],$_POST['optradio']);
   }
 ?>
 <div class='container' id='pageContent'>
@@ -14,7 +14,8 @@
 	<div class='row center'>
 
 		<form class='col-sm-6 col-sm-offset-3' action='create_exercicios.php' method='post'>
-		<div class="form-group ">
+    <input name='id' type='hidden' value='<?=$_GET['id']?>'/>
+    <div class="form-group ">
 			<label for="enunciado">Enunciado</label>
 			<textarea name='name' class="form-control" rows="5" id="exercicio"></textarea>
 		</div>

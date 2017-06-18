@@ -30,11 +30,17 @@
   }else if($_GET['act']=="listas"){
     echo breadcrumb("","","MINHAS LISTAS");
   }
+
+
 ?>
 
 <div class='container' id='pageContent'>
-
-  <?php if($act=="curso"||$act=="disciplina"||$act=="assunto"):?>
+  
+  <?php
+  if($act=="exercicio")
+    echo "<script src='votos.js'></script>";
+  else
+  if($act=="curso"||$act=="disciplina"||$act=="assunto"):?>
 
     <div class='row'>
       <form id="hdnform" class='col-sm-4 col-sm-offset-4 hidden'

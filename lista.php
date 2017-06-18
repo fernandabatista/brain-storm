@@ -12,7 +12,7 @@
     }
   }
   html_header("style2.css");
-  echo breadcumb(2,$_GET['id']);
+  echo breadcrumb("listas",$_GET['id']);
 ?>
   <div class='container' id='pageContent'>
   <?= exercicios($_GET['id'],true); ?>

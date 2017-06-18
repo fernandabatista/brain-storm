@@ -10,9 +10,8 @@
                 <a href="'.$path.'/index.php?act=curso">Home</a>
                   <a href="'.$path.'/edita_perfil.php">Editar perfil</a>
                    <a href="'.$path."/pesquisar.php".'">Pesquisar</a>
-                    <a href="'.$path.'/index.php?act=listas">Minhas listas</a>';
-                     if(!$_SESSION['tipo'])
-                      $html_result.='<a href="#">Criar</a>';
+                    <a href="'.$path.'/index.php?act=listas">Minhas listas</a>
+                     <a href="logout.php">Sair</a>';
     if($aluno)
 
     $html_result.='</div>';
