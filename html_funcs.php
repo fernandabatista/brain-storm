@@ -10,16 +10,8 @@
                 <a href="'.$path.'/index.php?act=curso">Home</a>
                   <a href="'.$path.'/edita_perfil.php">Editar perfil</a>
                    <a href="'.$path."/pesquisar.php".'">Pesquisar</a>
-<<<<<<< HEAD
                     <a href="'.$path.'/index.php?act=listas">Minhas listas</a>
                      <a href="logout.php">Sair</a>';
-=======
-                    <a href="'.$path.'/index.php?act=listas">Minhas listas</a>';
-                     
-                     if(!$_SESSION['tipo'])
-                      $html_result.='<a href="#">Criar</a>';
-                  $html_result.='<a href="'.$path."/logout.php".'">Sair</a>';
->>>>>>> 6411fac3b1224d4a54e238861531fb92d8d25632
     if($aluno)
 
     $html_result.='</div>';
