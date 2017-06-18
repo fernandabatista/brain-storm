@@ -30,7 +30,7 @@ $(function(){
       url: "votos.php",
       success: function(msg)
       {
-         $(".btns#s"+the_id).html("<h1>aa"+msg+"</h1>");
+         $(".btns#s"+the_id).html(msg);
       }
      });
     });

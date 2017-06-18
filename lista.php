@@ -6,8 +6,8 @@
   require "html_funcs.php";
   if($_SERVER['REQUEST_METHOD']=='POST'){
     if(count($_POST['check_list']>0)){
-      echo
-        cria_lista($cid,$_POST['check_list'],$_POST['name']);
+    
+      echo cria_lista($_POST['id'],$_POST['check_list'],$_POST['name']);
 
     }
   }

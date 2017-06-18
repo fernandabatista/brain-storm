@@ -254,6 +254,7 @@ function exercicios($id=0,$form=FALSE,$pesquisa=FALSE,$text=""){
     $sql = "SELECT * FROM exercicio WHERE ID_Assunto=$id";
 
   }
+  $sql.= " ORDER BY Positivos desc";
   $result = mysqli_query($conn, $sql);
   $html_result="";
 
@@ -263,7 +264,8 @@ function exercicios($id=0,$form=FALSE,$pesquisa=FALSE,$text=""){
     $cont=0;
     $link=$path."/exercicios.php?id=";
     if($form){
-      $html_result.='<form id="form-test" action="lista.php" method="post">
+      $html_result.='<form id="form-test" action="lista.php" method="POST">
+      <input type="hidden" value="'.$id.'" name="id"/>
       <div class="form-group col-sm-6 col-sm-offset-3" id="nome">
         <label for="name">Nome da lista:</label>
     		<input name="name" type="text"  class="form-control center" >
