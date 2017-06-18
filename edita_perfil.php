@@ -3,6 +3,7 @@
 	require "selections.php";
 	require "html_funcs.php";
 	require "authenticate.php";
+	require "force_authenticate.php";
 	html_header("style.css");
 //  echo breadcumb(0,$_GET['id']);
 	$_POST['nomea'] = $_SESSION['name']; //nomea = nome atual e depois nome atualizado
@@ -20,7 +21,7 @@
 <div class='container' id='pageContent'>
 <div class='row center'>
 	<form class='col-sm-6 col-sm-offset-3' action='edita_perfil.php' method='post' enctype="multipart/form-data">
-	
+		
 		<div class="form-group ">
 			<label for="nome">Editar Nome:</label>
 			<input name= 'nome' type="text" class="form-control center" id="user" 

@@ -4,7 +4,11 @@
   require "insertions.php";
   require "html_funcs.php";
   require "authenticate.php";
+  require "force_authenticate.php";
   html_header("style.css");
+  if(!$login){
+    die("Você não tem permissão para acessar essas página.");
+  }
 
   if($_SERVER['REQUEST_METHOD']=="POST"){
     $tagid=0;
