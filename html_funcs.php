@@ -6,7 +6,7 @@
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>';
 
     $html_result.='<div class="row"><img src="'.imagem($_SESSION['user']).'"
-            class="col-sm-8 col-sm-offset-2 img-circle imgp" alt="Foto de perfil"></div>
+            class="col-sm-8 col-sm-offset-2 img-circle imgp" height="150" width="150" alt="Foto de perfil"></div>
                 <a href="'.$path.'/index.php?act=curso">Home</a>
                   <a href="'.$path.'/edita_perfil.php">Editar perfil</a>
                    <a href="'.$path."/pesquisar.php".'">Pesquisar</a>
@@ -18,7 +18,6 @@
     $html_result.='</div>';
     return $html_result;
   }
-
 
   function html_header($link,$nav=TRUE){
 
@@ -47,11 +46,10 @@
       </div>';
       if($nav)echo nav();
   }
+
   function html_closing(){
     echo "</body>
     </html>";
   }
-
-
 
 ?>
