@@ -1,5 +1,6 @@
 <?php
 
+  require "force_authenticate.php";
   require_once "selections.php";
   require_once "insertions.php";
   require_once "html_funcs.php";

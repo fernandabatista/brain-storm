@@ -1,8 +1,12 @@
 <?php
 
+  require "force_authenticate.php";
   require "selections.php";
   require "insertions.php";
+  require "deletions.php";
   require "html_funcs.php";
+  require "authenticate.php";
+
   html_header("style.css");
 
   if($_SERVER['REQUEST_METHOD']=="POST"){
@@ -25,9 +29,23 @@
       $act="curso";
     }
 
+    if($_GET['act']=="dlistas"){
+      usuario_has_lista($id);
+      $act="listas";
+      $id=0;
+      echo breadcrumb("","","MINHAS LISTAS");
+    }
+
+    if($act=="slistas"){
+      salva_lista($id);
+      $act="listas";
+      $id=0;
+      echo breadcrumb("","","MINHAS LISTAS");
+    }
+
     echo breadcrumb($_GET['act'],$id);
 
-  }else if($_GET['act']=="listas"){
+  }else if($act=="listas"){
     echo breadcrumb("","","MINHAS LISTAS");
   }
 
@@ -35,12 +53,12 @@
 ?>
 
 <div class='container' id='pageContent'>
-  
+
   <?php
   if($act=="exercicio")
     echo "<script src='votos.js'></script>";
   else
-  if($act=="curso"||$act=="disciplina"||$act=="assunto"):?>
+  if(($act=="curso"||$act=="disciplina"||$act=="assunto")&&!$_SESSION['tipo']):?>
 
     <div class='row'>
       <form id="hdnform" class='col-sm-4 col-sm-offset-4 hidden'

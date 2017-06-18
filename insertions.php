@@ -126,4 +126,19 @@
     exit();
   }
 
+  function salva_lista($id){
+    require "credentials.php";
+    require "authenticate.php";
+    require "links.php";
+    $conn = mysqli_connect($servername, $username, $password, $dbname);
+    // Check connection
+    if (!$conn) {
+      die("Connection failed: " . mysqli_connect_error());
+    }
+    $sql = "INSERT INTO usuario_has_lista VALUES
+      (".$_SESSION['user'].",$id)";
+    mysqli_query($conn, $sql);
+    //echo $sql;
+    mysqli_close($conn);
+  }
 ?>

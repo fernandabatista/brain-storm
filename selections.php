@@ -247,7 +247,7 @@ function exercicios($id,$form=FALSE){
   $sql = "SELECT * FROM exercicio WHERE ID_Assunto=$id";
   $result = mysqli_query($conn, $sql);
   $html_result="";
-  $_SESSION['cid']=$id;
+
   $num_rows=mysqli_num_rows($result);
   if ($num_rows > 0) {
     // output data of each row
@@ -394,8 +394,9 @@ function professores(){
     if (mysqli_num_rows($result) > 0) {
       // output data of each row
       $cont=0;
-      $link="#";
+
       while($row = mysqli_fetch_assoc($result)) {
+        $link="adm_showprof.php?id=".$row['ID_Usuario'];
         $html_result.= "<a href='$link' class='list-group-item'><span class='lprof'>".
                                       $row['Nome_Usuario']. "</span> <span class=' icon glyphicon glyphicon-eye-open'></span></a>";
       }
@@ -405,7 +406,7 @@ function professores(){
     mysqli_close($conn);
   }
 
-function login($_email,$_pw){
+function login($_email,$_pw,$adm=0){
     require "authenticate.php";
     require'credentials.php';
     require "links.php";
@@ -413,21 +414,39 @@ function login($_email,$_pw){
     $email = mysqli_real_escape_string($conn,$_POST["email"]);
     $password = mysqli_real_escape_string($conn,$_POST["pwd"]);
     // $password = md5($password);
+
+    if($adm){
+      $sql = "SELECT ID_Admin,Senha_Admin, Email_Admin FROM admin
+              WHERE Email_Admin = '$email'";
+    }else{
     $sql = "SELECT ID_Usuario,Senha, Email, Nome_Usuario,Aluno FROM usuario
             WHERE email = '$email'";
-
+    }
     $result = mysqli_query($conn, $sql);
     if($result){
       if (mysqli_num_rows($result) > 0) {
         $user = mysqli_fetch_assoc($result);
-        if ($user["Senha"] == $password) {
-          $_SESSION["user"] = $user["ID_Usuario"];
-          $_SESSION["name"] = $user["Nome_Usuario"];
-          $_SESSION["tipo"] = $user["Aluno"];
-          $_SESSION["cid"] = 0;
-          $_SESSION["cloc"] = "curso";
-          header("Location: " . $path . "/index.php?act=curso");
-          exit();
+        if($adm)
+          $senha=$user["Senha_Admin"];
+        else
+          $senha=$user["Senha"];
+        if ($senha == $password) {
+          if($adm){
+              $_SESSION["user"] = $user["ID_Admin"];
+              $_SESSION["name"] = "";
+              $_SESSION["tipo"] = false;
+              header("Location: " . $path . "/adm_listap.php");
+              exit();
+          }else{
+            $_SESSION["user"] = $user["ID_Usuario"];
+            $_SESSION["name"] = $user["Nome_Usuario"];
+            $_SESSION["tipo"] = $user["Aluno"];
+            $_SESSION["cid"] = 0;
+            $_SESSION["cloc"] = "curso";
+            header("Location: " . $path . "/index.php?act=curso");
+            exit();
+          }
+
         }else {
           echo 'dados incorretos';
         }
@@ -556,15 +575,15 @@ function listas($id,$minhas=false){
                     $links[]=$path."/relatoriolista.php?id=".$row['ID_Lista'];
                 }
 
-                // $buttons['eye-open']="VER";
-                // $links[]=$path."/verlista.php?id=".$row['ID_Lista'];
+                $buttons['eye-open']="VER";
+                $links[]=$path."/verlista.php?id=".$row['ID_Lista'];
 
                 if(!$minhas){
                   $buttons['floppy-disk']="SALVAR";
-                  $links[]="#";
+                  $links[]="index.php?act=slistas&id=".$row['ID_Lista'];
                 }else{
                   $buttons['trash']="EXCLUIR";
-                  $links[]="#";
+                  $links[]="index.php?act=dlistas&id=".$row['ID_Lista'];
                 }
 
                 $n=0;
@@ -674,6 +693,5 @@ function relatorio($id){
   echo $html_result;
   mysqli_close($conn);
 }
-
 
 ?>

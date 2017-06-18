@@ -1,5 +1,5 @@
 <?php
-
+  require "force_authenticate.php";
   require "selections.php";
   require  "insertions.php";
   require "authenticate.php";

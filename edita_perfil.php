@@ -1,4 +1,5 @@
 <?php
+  require "force_authenticate.php";
   require "update.php";
 
   require "selections.php";
@@ -23,7 +24,7 @@
 			<input type="file" required name="arquivo">
 		<div class="form-group ">
 			<label for="nome">Nome:</label>
-			<input name= 'nome' type="text" class="form-control center" id="user" 
+			<input name= 'nome' type="text" class="form-control center" id="user"
 			value="<?= $_POST['nomea'] ?>">
 		</div>
 		<div class="form-group">

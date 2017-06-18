@@ -22,7 +22,7 @@
 
 
 		<div class="col-sm-3">
-			<div class="panel panel-default"><a href="#">
+			<div class="panel panel-default hoverable"><a href="login.php">
 				<div class="panel-heading">
 					<div class="panel-body">
 					<h3>Acessar como aluno</h3>
@@ -33,7 +33,7 @@
 
 
 		<div class="col-sm-3">
-			<div class="panel panel-default"><a href="#">
+			<div class="panel panel-default hoverable"><a href="login.php">
 				<div class="panel-heading">
 					<div class="panel-body">
 						<h3>Acessar como professor</h3>
@@ -46,7 +46,7 @@
 	</div>
 	<div class='row' >
 		<a class='cpointer' href='<?=$path?>/cadastrar.php'>Cadastrar-se</a><br/>
-		<a class='cpointer' href='#'>Acessar como administrador</a>
+		<a class='cpointer' href='login.php?adm=1'>Acessar como administrador</a>
 	</div>
 </div>
 </body>

@@ -4,6 +4,9 @@
   require "html_funcs.php";
   html_header("style.css",false);
 	if($_SERVER["REQUEST_METHOD"] == "POST"){
+    if(isset($_POST['adm']))
+      login($_POST['email'],$_POST['pwd'],true);
+    else
 		login($_POST['email'],$_POST['pwd']);
 	}
 ?>
@@ -11,7 +14,12 @@
 	<div class='row center'>
 
 		<form class='col-sm-6 col-sm-offset-3' action='login.php' method='post'>
-		<div class="form-group ">
+
+    <?php if(isset($_GET['adm'])){
+      echo "<input name='adm' value='1' type='hidden'/>";
+    }?>
+
+    <div class="form-group ">
 			<label for="email">E-mail:</label>
 			<input name= 'email' type="email" class="form-control center" id="email">
 		</div>
