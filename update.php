@@ -1,5 +1,5 @@
 <?php
-    function perfil($ass, $nome, $pwd){
+    function perfil($ass, $nome){
         require "credentials.php";
         require "authenticate.php";
         require "links.php";
@@ -13,7 +13,7 @@
         //mysqli_query($conn, $sql);
         //echo $sql;
 
-        $sql = "UPDATE usuario SET Nome_Usuario='$nome', Senha='$pwd' WHERE ID_Usuario = '".$_SESSION['user']."'";
+        $sql = "UPDATE usuario SET Nome_Usuario='$nome' WHERE ID_Usuario = '".$_SESSION['user']."'";
         $_POST['nome'] = $nome;
 
         if (mysqli_query($conn, $sql)) {
@@ -52,5 +52,22 @@
         }
     
     }
-
+    function mudasenha($ass, $pwd){
+        require "credentials.php";
+        require "authenticate.php";
+        require "links.php";
+        $conn = mysqli_connect($servername, $username, $password, $dbname);
+        // Check connection
+        if (!$conn) {
+          die("Connection failed: " . mysqli_connect_error());
+        } 
+        $sql = "UPDATE usuario SET Senha='$pwd' WHERE ID_Usuario = '".$_SESSION['user']."'";
+        if (mysqli_query($conn, $sql)) {
+        echo "Alterações Salvas! ";
+    } else {
+        echo "Error updating record: " . mysqli_error($conn);
+    }
+    mysqli_close($conn);
+    
+    }
 ?>

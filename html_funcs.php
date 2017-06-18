@@ -52,11 +52,11 @@
     </html>";
   }
 
-    function modal($botao, $titulo){
-        echo '<button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">'.$botao.'</button><br><br>
+    function modal($nome, $botao, $titulo){
+        echo '<button type="button" class="btn btn-default" data-toggle="modal" data-target="#'.$nome.'">'.$botao.'</button><br><br>
 
         <!-- Modal -->
-<div id="myModal" class="modal fade" role="dialog">
+<div id="'.$nome.'" class="modal fade" role="dialog">
   <div class="modal-dialog">
 
     <!-- Modal content-->

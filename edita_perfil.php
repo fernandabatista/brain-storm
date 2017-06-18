@@ -12,32 +12,35 @@
   		if (isset($_FILES['arquivo'])) {
   			mudafoto($_SESSION['cid'], $_FILES['arquivo']);
   	}
+  	if (isset($_POST['pwd'])) {
+				mudasenha($_SESSION['cid'], $_POST['pwd']);
+				} 
   }
-
-
 ?>
-  <div class='container' id='pageContent'>
-
-  <div class='row center'>
-
-		<form class='col-sm-6 col-sm-offset-3' action='edita_perfil.php' method='post' enctype="multipart/form-data">
-		<div class="form-group">
-			<?php modal('Mudar Foto', 'Mudar Foto'); ?>
-			<label for="arquivo">Avatar: </label>
-			<input type="file"  name="arquivo">
-			<?php modal_footer('Concluido');?>
+<div class='container' id='pageContent'>
+<div class='row center'>
+	<form class='col-sm-6 col-sm-offset-3' action='edita_perfil.php' method='post' enctype="multipart/form-data">
+		
 		<div class="form-group ">
-			<label for="nome">Nome:</label>
+			<label for="nome">Editar Nome:</label>
 			<input name= 'nome' type="text" class="form-control center" id="user" 
 			value="<?= $_POST['nomea']; ?>">
 		</div>
 		<div class="form-group">
+			<?php modal('senha', 'Mudar Senha', 'Mudar Senha'); ?>
 			<label for="pwd">Nova Senha:</label>
 			<input name= 'pwd' type="password" class="form-control center" id="pwd">
+
+			<?php modal_footer('Concluido'); ?>
+		</div>
+		<div class="form-group">
+			<?php modal('foto', 'Mudar Foto', 'Mudar Foto'); ?>
+			<label for="arquivo">Avatar: </label>
+			<input type="file"  name="arquivo">
+			<?php modal_footer('Concluido');?>
 		</div>
 		<button type="submit" class="btn btn-default">CADASTRAR</button>
 		</form>
-	</div>
-
-  </div>
+</div>
+</div>
 <?php html_closing() ?>
