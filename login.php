@@ -1,8 +1,12 @@
 <?php
-
+	include "authenticate.php";
+	require "links.php";	
   require "selections.php";
   require "html_funcs.php";
   html_header("style.css",false);
+  if($login){
+    header("Location: " . $path . "/index.php?act=curso");
+      }
 	if($_SERVER["REQUEST_METHOD"] == "POST"){
     if(isset($_POST['adm']))
       login($_POST['email'],$_POST['pwd'],true);

@@ -12,6 +12,7 @@
 	require "selections.php";
 	require "html_funcs.php";
 	require "authenticate.php";
+	require "force_authenticate.php";
 	html_header("style.css");
 >>>>>>> 46bbb80eb96c10b4e6399044abd229890456c414
 //  echo breadcumb(0,$_GET['id']);
@@ -43,17 +44,12 @@
 >>>>>>> 46bbb80eb96c10b4e6399044abd229890456c414
 		</div>
 		<div class="form-group">
-			<?php modal('senha', 'Mudar Senha', 'Mudar Senha'); ?>
 			<label for="pwd">Nova Senha:</label>
 			<input name= 'pwd' type="password" class="form-control center" id="pwd">
-
-			<?php modal_footer('Concluido'); ?>
 		</div>
 		<div class="form-group">
-			<?php modal('foto', 'Mudar Foto', 'Mudar Foto'); ?>
 			<label for="arquivo">Avatar: </label>
 			<input type="file"  name="arquivo">
-			<?php modal_footer('Concluido');?>
 		</div>
 		<button type="submit" class="btn btn-default">CADASTRAR</button>
 		</form>

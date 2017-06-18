@@ -6,8 +6,15 @@
   require "deletions.php";
   require "html_funcs.php";
   require "authenticate.php";
+<<<<<<< HEAD
 
+=======
+  require "force_authenticate.php";
+>>>>>>> 6411fac3b1224d4a54e238861531fb92d8d25632
   html_header("style.css");
+  if(!$login){
+    die("Você não tem permissão para acessar essas página.");
+  }
 
   if($_SERVER['REQUEST_METHOD']=="POST"){
     $tagid=0;
@@ -53,12 +60,17 @@
 ?>
 
 <div class='container' id='pageContent'>
+<<<<<<< HEAD
 
   <?php
   if($act=="exercicio")
     echo "<script src='votos.js'></script>";
   else
   if(($act=="curso"||$act=="disciplina"||$act=="assunto")&&!$_SESSION['tipo']):?>
+=======
+<?php if($tipo == '0'): ?>
+  <?php if($act=="curso"||$act=="disciplina"||$act=="assunto"):?>
+>>>>>>> 6411fac3b1224d4a54e238861531fb92d8d25632
 
     <div class='row'>
       <form id="hdnform" class='col-sm-4 col-sm-offset-4 hidden'
@@ -95,6 +107,7 @@
     </div>
     <br><br>
 
+    <?php endif?>
     <?php endif?>
 
   <?php
