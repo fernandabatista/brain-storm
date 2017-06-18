@@ -1,16 +1,19 @@
 <?php
-  require "update.php";
-
-  require "selections.php";
-  require_once "html_funcs.php";
-  require_once "authenticate.php";
-  html_header("style.css");
+	require "update.php";
+	require "selections.php";
+	require "html_funcs.php";
+	require "authenticate.php";
+	html_header("style.css");
 //  echo breadcumb(0,$_GET['id']);
-  $_POST['nomea'] = $_SESSION['name']; //nomea = nome atual e depois nome atualizado
-   if($_SERVER['REQUEST_METHOD']=='POST'){
-    perfil($_SESSION['cid'],$_POST['nome'], $_POST['pwd'], $_FILES['arquivo']);
-  $_POST['nomea'] = $_POST['nome'];
+	$_POST['nomea'] = $_SESSION['name']; //nomea = nome atual e depois nome atualizado
+    if($_SERVER['REQUEST_METHOD']=='POST'){
+    perfil($_SESSION['cid'],$_POST['nome'], $_POST['pwd']);
+  	$_SESSION['name'] = $_POST['nomea']= $_POST['nome'];
+  		if (isset($_FILES['arquivo'])) {
+  			mudafoto($_SESSION['cid'], $_FILES['arquivo']);
+  	}
   }
+
 
 ?>
   <div class='container' id='pageContent'>
@@ -19,12 +22,14 @@
 
 		<form class='col-sm-6 col-sm-offset-3' action='edita_perfil.php' method='post' enctype="multipart/form-data">
 		<div class="form-group">
-			<label for="foto">Avatar: </label>
-			<input type="file" required name="arquivo">
+			<?php modal('Mudar Foto', 'Mudar Foto'); ?>
+			<label for="arquivo">Avatar: </label>
+			<input type="file"  name="arquivo">
+			<?php modal_footer('Concluido');?>
 		<div class="form-group ">
 			<label for="nome">Nome:</label>
 			<input name= 'nome' type="text" class="form-control center" id="user" 
-			value="<?= $_POST['nomea'] ?>">
+			value="<?= $_POST['nomea']; ?>">
 		</div>
 		<div class="form-group">
 			<label for="pwd">Nova Senha:</label>

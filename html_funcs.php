@@ -47,11 +47,36 @@
       </div>';
       if($nav)echo nav();
   }
-  function html_closing(){
+    function html_closing(){
     echo "</body>
     </html>";
   }
 
+    function modal($botao, $titulo){
+        echo '<button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">'.$botao.'</button><br><br>
 
+        <!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">'.$titulo.'</h4>
+      </div>
+      <div class="modal-body">';
+  }
+
+    function modal_footer($fechar){
+      echo  '</div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">'.$fechar.'</button>
+      </div>
+    </div>
+
+  </div>
+</div>';
+    }
 
 ?>
