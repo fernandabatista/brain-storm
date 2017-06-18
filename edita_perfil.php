@@ -20,7 +20,7 @@
 <div class='container' id='pageContent'>
 <div class='row center'>
 	<form class='col-sm-6 col-sm-offset-3' action='edita_perfil.php' method='post' enctype="multipart/form-data">
-		
+	
 		<div class="form-group ">
 			<label for="nome">Editar Nome:</label>
 			<input name= 'nome' type="text" class="form-control center" id="user" 

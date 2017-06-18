@@ -3,6 +3,7 @@
   require "selections.php";
   require "insertions.php";
   require "html_funcs.php";
+  require "authenticate.php";
   html_header("style.css");
 
   if($_SERVER['REQUEST_METHOD']=="POST"){
@@ -33,7 +34,7 @@
 ?>
 
 <div class='container' id='pageContent'>
-
+<?php if($tipo == '0'): ?>
   <?php if($act=="curso"||$act=="disciplina"||$act=="assunto"):?>
 
     <div class='row'>
@@ -71,6 +72,7 @@
     </div>
     <br><br>
 
+    <?php endif?>
     <?php endif?>
 
   <?php
