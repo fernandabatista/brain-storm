@@ -87,6 +87,9 @@ function pesquisa($table,$text){
   require 'credentials.php';
   require "links.php";
   require "authenticate.php";    // Create connection
+
+  if($table=="exercicio")
+    return "<br/>".exercicios("","",true,$text);
   $conn = mysqli_connect($servername, $username, $password, $dbname);
   // Check connection
   if (!$conn) {
@@ -174,8 +177,9 @@ function pesquisa($table,$text){
   }
   else {
   }
-  return ($html_result."</div>");
   mysqli_close($conn);
+  return ($html_result."</div>");
+
 }
 
 function hier($act,$id=0){
@@ -234,7 +238,7 @@ function hier($act,$id=0){
 
 }
 
-function exercicios($id,$form=FALSE){
+function exercicios($id=0,$form=FALSE,$pesquisa=FALSE,$text=""){
   require'credentials.php';
   require "links.php";
   require "authenticate.php";
@@ -244,7 +248,12 @@ function exercicios($id,$form=FALSE){
     die("Connection failed: " . mysqli_connect_error());
   }
   mysqli_set_charset($conn,"utf8");
-  $sql = "SELECT * FROM exercicio WHERE ID_Assunto=$id";
+  if($pesquisa){
+    $sql = "SELECT * FROM exercicio WHERE titulo LIKE'%$text%'";
+  }else{
+    $sql = "SELECT * FROM exercicio WHERE ID_Assunto=$id";
+
+  }
   $result = mysqli_query($conn, $sql);
   $html_result="";
 
@@ -263,29 +272,40 @@ function exercicios($id,$form=FALSE){
 
     while($row = mysqli_fetch_assoc($result)) {
 
-      $html_result.="  <div class='row'>
-        <div class='panel panel-default col-sm-6 col-sm-offset-3'>";
-      $html_result.="
-      <span class='btns' id=s".$row['ID_Exercicio'].">
-      <a href='javascript:;' class='vote_up green' id='".$row['ID_Exercicio']."'>
-      <span class='glyphicon glyphicon-thumbs-up'></span>
-      </a><span id='pos'>".$row['Positivos']."</span>
-      <a href='javascript:;' class='vote_down red' id='".$row['ID_Exercicio']."'>
-      <span class='glyphicon glyphicon-thumbs-down'></span>
-      </a><span id='neg'>".$row['Negativos']."</span>
-      </span>";
-      if($form)
-        $html_result.='<input type="checkbox" name="check_list[]" value="'.$row['ID_Exercicio'].'" class="left">';
+      if($pesquisa)
+        $array=hier("exercicio",$row['ID_Exercicio']);
 
-            $html_result.="<div class='panel-heading'>".$row['titulo']."</div>
+      $html_result.="
+      <div class='row'>
+        <div class='panel panel-default col-sm-6 col-sm-offset-3'>
+          <span class='btns' id=s".$row['ID_Exercicio'].">
+            <a href='javascript:;' class='vote_up green' id='".$row['ID_Exercicio']."'>
+              <span class='glyphicon glyphicon-thumbs-up'></span></a>
+            <span id='pos'>".$row['Positivos']."</span>
+            <a href='javascript:;' class='vote_down red' id='".$row['ID_Exercicio']."'>
+              <span class='glyphicon glyphicon-thumbs-down'></span></a>
+            <span id='neg'>".$row['Negativos']."</span>
+          </span>";
+      if($form){
+        $html_result.='<input type="checkbox" name="check_list[]" value="'.$row['ID_Exercicio'].'" class="left">';
+      }
+            $html_result.="
+            <div class='panel-heading'>".$row['titulo']."</div>
             <div class='panel-body'>
-            a)".$row['a1']."<br/>
-            b)".$row['a2']."<br/>
-            c)".$row['a3']."<br/>
-            d)".$row['a4']."<br/>
-            e)".$row['a5']."<br/>
-          </div>
-          </div>
+              a)".$row['a1']."<br/>
+              b)".$row['a2']."<br/>
+              c)".$row['a3']."<br/>
+              d)".$row['a4']."<br/>
+              e)".$row['a5']."<br/>
+          ";
+
+          if($pesquisa){
+            //echo "aaa";
+            $html_result.="<a href='index.php?act=scurso&id=".$array[1][0]."
+            '><button class='btn btn-default'>SALVAR CURSO</button></a>";
+          }
+
+          $html_result.="</div></div>
         </div>";
         //if($form)
           // $html_result.="</label>";
@@ -296,8 +316,9 @@ function exercicios($id,$form=FALSE){
       $html_result.="</form>";
     }
   }
-  return $html_result;
   mysqli_close($conn);
+  return $html_result;
+
 }
 
 function exerciciosLista($id,$do=false){

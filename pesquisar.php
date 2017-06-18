@@ -3,6 +3,7 @@
   require "html_funcs.php";
   html_header("style.css");
   $result="";
+  echo breadcrumb("","","PESQUISAR");
   if($_SERVER['REQUEST_METHOD']=="POST"&&isset($_POST['optradio'])&&isset($_POST['search'])){
 
     $result = pesquisa($_POST['optradio'],$_POST['search']);
@@ -25,6 +26,9 @@
     </div>
     <div class="radio-inline">
       <label><input type="radio" name="optradio" value="Assunto">ASSUNTOS</label>
+    </div>
+    <div class="radio-inline">
+      <label><input type="radio" name="optradio" value="exercicio">EXERCÍCIOS</label>
     </div>
     <br/>
     <button type="submit" class="btn btn-default"><span class='glyphicon
