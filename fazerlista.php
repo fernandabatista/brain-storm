@@ -17,7 +17,7 @@
   if($_SERVER['REQUEST_METHOD']=='POST')
     echo $s;
   else
-    exerciciosLista($_GET['id'],true);
+    echo exerciciosLista($_GET['id'],true);
   ?>
   </div>
 <?php html_closing() ?>

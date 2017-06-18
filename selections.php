@@ -173,157 +173,60 @@ function pesquisa($table,$text){
   mysqli_close($conn);
 }
 
-function tableCurso(){
-  require 'credentials.php';
-  require "links.php";
-  require "authenticate.php";    // Create connection
-  $conn = mysqli_connect($servername, $username, $password, $dbname);
-  // Check connection
-  if (!$conn) {
-    die("Connection failed: " . mysqli_connect_error());
-  }
-  mysqli_set_charset($conn,"utf8");
-  $sql = "SELECT c.* from usuario u JOIN
-  usuario_has_Curso uc ON u.ID_Usuario = uc.ID_Usuario JOIN
-  curso c ON c.ID_Curso = uc.ID_Curso WHERE uc.ID_Usuario = ".$user;
-  $result = mysqli_query($conn, $sql);
-  $html_result="";
-  $_SESSION['cid']=0;
-  $_SESSION["cloc"] = "curso";
-  if (mysqli_num_rows($result) > 0) {
-    // output data of each row
-    $cont=0;
-    $link=$path."/index.php?act=disciplina&id=";
-    while($row = mysqli_fetch_assoc($result)) {
-
-      if($cont==4){
-        $html_result.="</div>";
-        $cont=0;
-      }
-      if($cont==0){
-        $html_result.="<div class='row'>";
-      }
-      $html_result.=' <div class="col-sm-3">
-      <div class="panel panel-default hoverable">
-      <a href='.$link.$row['ID_Curso'].'>
-      <div class="panel-heading"><h1>'.$row['Tag'].'
-      </h1><div class="panel-body">'.$row['Nome_Curso'].
-      '</div>
-      </div>
-      </div>
-      </a></div>';
-      $cont++;
-
-    }
-  }
-  else {
-  }
-  echo ($html_result."</div>");
-  mysqli_close($conn);
-}
-
-function disciplinas($id){
-  require "credentials.php";
-  require "links.php";
-  require "authenticate.php";
-  $conn = mysqli_connect($servername, $username, $password, $dbname);
-  // Check connection
-  if (!$conn) {
-    die("Connection failed: " . mysqli_connect_error());
-  }
-  mysqli_set_charset($conn,"utf8");
-  $sql = "SELECT * FROM disciplina WHERE ID_Curso=$id";
-  $result = mysqli_query($conn, $sql);
-  $html_result="";
-  $_SESSION['cid']=$id;
-  $_SESSION["cloc"] = "disciplina";
-  $link=$path."/create_disciplina.php";
-  // $html_result.='
-  // <br><br>';
-  // $html_result.='<div class="col-sm-3">
-  //     <div class="panel panel-default hoverable">
-  //       <a href='.$link.'>
-  //       <div class="panel-heading">
-  //         <h4>NOVA DISCIPLINA</h4>
-  //       </div>
-  //       </a>
-  //     </div>
-  //     </div>';
-  if (mysqli_num_rows($result) > 0) {
-    // output data of each row
-    $cont=0;
-    $link=$path."/index.php?act=assunto&id=";
-    while($row = mysqli_fetch_assoc($result)) {
-
-      if($cont==4){
-        $html_result.="</div>";
-        $cont=0;
-      }
-      if($cont==0){
-        $html_result.="<div class='row'>";
-      }
-      $html_result.=' <div class="col-sm-3">
-      <div class="panel panel-default hoverable">
-      <a href='.$link.$row['ID_Disciplina'].'>
-      <div class="panel-heading"><h4>'.$row['Nome_Disciplina'].'
-      </h4>
-      </div>
-      </div>
-      </a></div>';
-      $cont++;
-    }
-
-  }
-  echo ($html_result."</div>");
-  mysqli_close($conn);
-}
-
-function assuntos($id){
+function hier($act,$id=0){
   require 'credentials.php';
   require "links.php";
   require "authenticate.php";
-    $conn = mysqli_connect($servername, $username, $password, $dbname);
-  // Check connection
-  if (!$conn) {
-    die("Connection failed: " . mysqli_connect_error());
-  }
+
+  $bc=array();
+
+  if($act=="curso")
+    return $bc;
+
+  $conn = mysqli_connect($servername, $username, $password, $dbname);
   mysqli_set_charset($conn,"utf8");
-  $sql = "SELECT * FROM assunto WHERE ID_Disciplina=$id";
-  $result = mysqli_query($conn, $sql);
-  $html_result="";
-  $_SESSION['cid']=$id;
-  $_SESSION["cloc"] = "assunto";
-  if (mysqli_num_rows($result) > 0) {
 
-    $cont=0;
-    $link=$path."/exercicios.php?id=";
-    while($row = mysqli_fetch_assoc($result)) {
-
-      if($cont==4){
-        $html_result.="</div>";
-        $cont=0;
-      }
-      if($cont==0){
-        $html_result.="<div class='row'>";
-      }
-      $html_result.='
-      <div class="col-sm-3">
-        <div class="panel panel-default hoverable">
-          <a href='.$link.$row['ID_Assunto'].'>
-            <div class="panel-heading"><h4>'.$row['Nome_Assunto'].'
-              </h4>
-            <div class="panel-body"></div>
-                  </div>
-
-
-      </div>
-      </a></div>';
-      $cont++;
+  if($act=="listas"){
+    if(!$_SESSION['tipo']){
+      $bc[]=array(0,"LISTAS");
     }
-    echo ($html_result."</div>");
+    $act="exercicio";
+  }
+
+  if($act=="exercicio"){
+    $sql = "SELECT Nome_Assunto,ID_Disciplina FROM assunto where ID_Assunto=$id";
+    $result=mysqli_query($conn,$sql);
+    $row=mysqli_fetch_assoc($result);
+    $bc[]=array($id,$row['Nome_Assunto']);
+    $act="assunto";
+    $id=$row['ID_Disciplina'];
+  }
+
+  if($act=="assunto"){
+    $sql = "SELECT ID_Curso,Nome_Disciplina
+      FROM DISCIPLINA where ID_Disciplina=$id";
+    $result=mysqli_query($conn,$sql);
+    $row=mysqli_fetch_assoc($result);
+    $bc[]=array($id,$row['Nome_Disciplina']);
+    $id=$row['ID_Curso'];
+    $act="disciplina";
+  }
+
+  if($act=="disciplina"){
+    $sql = "SELECT Nome_Curso FROM CURSO where ID_Curso=$id";
+    $result=mysqli_query($conn,$sql);
+    $row=mysqli_fetch_assoc($result);
+    $bc[]=array($id,$row['Nome_Curso']);
+    $act="curso";
+  }
+
+  if($act=="curso"){
+    $bc[]=array("","HOME");
   }
 
   mysqli_close($conn);
+  return array_reverse($bc);
+
 }
 
 function exercicios($id,$form=FALSE){
@@ -373,13 +276,13 @@ function exercicios($id,$form=FALSE){
         //if($form)
           // $html_result.="</label>";
     }
-    echo $html_result."</div>";
+    $html_result.="</div>";
     if($form){
-      echo("<button type='submit' class='btn btn-default impbtn col-sm-4 col-sm-offset-4'>PRONTO</button>");
-      echo("</form>");
+      $html_result.="<button type='submit' class='btn btn-default impbtn col-sm-4 col-sm-offset-4'>PRONTO</button>";
+      $html_result.="</form>";
     }
   }
-
+  return $html_result;
   mysqli_close($conn);
 }
 
@@ -429,95 +332,38 @@ function exerciciosLista($id,$do=false){
       </div>";
   }
 
-  echo $html_result."</div>";
+  $html_result.="</div>";
   if($do){
-    echo("<button type='submit' class='btn btn-default impbtn col-sm-4 col-sm-offset-4'>PRONTO</button>");
-    echo("</form>");
-
+    $html_result.="<button type='submit' class='btn btn-default impbtn col-sm-4 col-sm-offset-4'>PRONTO</button>";
+    $html_result.="</form>";
   }
   mysqli_close($conn);
+  return $html_result;
 }
 
-function breadcumb($tag,$id){
-  require 'credentials.php';
-  require "links.php";
-  $conn = mysqli_connect($servername, $username, $password, $dbname);
-  // Check connection
-  if (!$conn) {
-    die("Connection failed: " . mysqli_connect_error());
+function breadcrumb($act="",$id=0,$special=""){
+  $html_result="<ul class='breadcrumb center'>";
+
+  if($special){
+    $html_result.="<li><a class='bclink' href='index.php?act=curso'>HOME</a></li>";
+    $html_result.="<li>$special</li>";
+    return $html_result."</ul>";
   }
-    mysqli_set_charset($conn,"utf8");
-  $array = array();
-    while($tag>=0){
-    switch($tag){
-      case 3:
-        $sql="select * from lista where ID_Lista = $id";
-        $result = mysqli_query($conn, $sql);
-        $row = mysqli_fetch_assoc($result);
-        $id=$row['ID_Assunto'];
-        $array[]=array('LISTAS',$id);
-        $tag--;
 
-      break;
-      case 2:
-        $sql="select * from assunto where ID_Assunto = $id";
-        $result = mysqli_query($conn, $sql);
-        $row = mysqli_fetch_assoc($result);
-        $id=$row['ID_Disciplina'];
-
-        $array[]=array($row['Nome_Assunto'],$id);
-        $tag--;
-
-      break;
-      case 1:
-        $sql="select * from disciplina where ID_Disciplina = $id";
-        $result = mysqli_query($conn, $sql);
-        $row = mysqli_fetch_assoc($result);
-        $id=$row['ID_Curso'];
-
-        $array[]=array($row['Nome_Disciplina'],$id);
-        $tag--;
-
-      break;
-      case 0:
-          $sql="select * from curso where ID_Curso = $id";
-          $result = mysqli_query($conn, $sql);
-          $row = mysqli_fetch_assoc($result);
-
-          $array[]=array($row['Nome_Curso'],$id);
-          $tag--;
-          break;
-      break;
-
+  $array = hier($act,$id);
+  if(!empty($array)){
+    $order=array("curso","disciplina","assunto","exercicio");
+    for($i=0;$i<count($array)-1;$i++){
+        $html_result.="<li><a class='bclink' href='index.php?act=".$order[$i];
+        if(isset($array[$i][0])){
+          $html_result.="&id=".$array[$i][0];
+        }
+        $html_result.="'>".$array[$i][1]."</a></li>";
     }
+    $html_result.="<li>".$array[$i][1]."</li>";
+
+    return $html_result."</ul>";
   }
-  $array=array_reverse($array);
-  $html_result="<ul class='breadcrumb center'><li><a href='$path/index.php?act=curso' class='bclink'>HOME</a></li>";
-  for($i=0;$i<count($array);$i++){
-    if($i==count($array)-1){
-      $html_result.="<li>".$array[$i][0]."</li>";
-      continue;
-    }
-
-    $link=$path;
-    switch($i){
-    case 0:
-    $link.="/index.php?act=disciplina&";
-    break;
-    case 1:
-
-    $link.="/index.php?act=assunto&";
-    break;
-    case 2:
-
-    $link.="/exercicios.php?";
-    break;
-    }
-    $link.="id=".$array[$i+1][1];
-    $html_result.="<li><a href='$link' class='bclink'>".$array[$i][0]."</a></li>";
-  }
-  echo ($html_result."</ul>");
-  mysqli_close($conn);
 }
 
 function professores(){
@@ -604,18 +450,45 @@ function calls($act,$id,$bc=false){
       break;
     case 'disciplina':
 
-      return $bc?breadcumb(0,$id):select($act,$id);
+      return select($act,$id);
       break;
-     case 'assunto':
-      return $bc?breadcumb(1,$id):assuntos($id);
+    case 'assunto':
+      return select($act,$id);
       break;
-     case 'listas':
+
+    case 'listas':
 
      if($id===0){
 
        return listas(0,true);
      }
       return $bc?breadcumb(3,$id):listas($id);
+      break;
+
+    case 'exercicio':
+      $html_result="
+          <div class='row'>
+            <a href='index.php?act=listas&id=".$id."'>
+            <button type='button' class='btn btn-default col-sm-6 col-sm-offset-3'>
+            <span class='glyphicon glyphicon-eye-open fleft'>
+            </span>VER LISTAS</button></a>
+          </div>
+
+        <div class='row'>
+          <a href='lista.php?id=".$id."'><button type='button' class='btn btn-default col-sm-6 col-sm-offset-3'>
+            <span class='glyphicon glyphicon-plus fleft'>
+            </span>NOVA LISTA</button></a>
+        </div>
+
+        <div class='row'>
+          <a href='create_exercicios.php?id=$id'>
+          <button type='button' class='btn btn-default col-sm-6 col-sm-offset-3'>
+          <span class='glyphicon glyphicon-plus fleft'>
+          </span>NOVO EXERCÍCIO</button></a>
+        </div>
+        <br/>";
+
+        echo $html_result.exercicios($id);
       break;
     default:
       echo "";
@@ -787,4 +660,6 @@ function relatorio($id){
   echo $html_result;
   mysqli_close($conn);
 }
+
+
 ?>

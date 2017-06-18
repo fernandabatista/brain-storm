@@ -49,8 +49,8 @@ create table if not exists `lista`(
 
 );
 create table if not exists `usuario_has_curso`(
-	ID_Usuario int, 
-    ID_Curso int, 
+	ID_Usuario int,
+    ID_Curso int,
     primary key(`ID_Usuario`,`ID_Curso`)
 );
 

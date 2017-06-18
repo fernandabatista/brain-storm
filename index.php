@@ -1,8 +1,10 @@
 <?php
+
   require "selections.php";
   require "insertions.php";
   require "html_funcs.php";
   html_header("style.css");
+
   if($_SERVER['REQUEST_METHOD']=="POST"){
     $tagid=0;
     if(isset($_POST['tag']))
@@ -12,6 +14,7 @@
 
     novo($_POST['act'],$tagid,$_POST['nome']);
   }
+
   $id=0;
   $act=$_GET['act'];
   if(isset($_GET['id'])){
@@ -21,8 +24,11 @@
       salva_curso($id);
       $act="curso";
     }
-    echo calls($_GET['act'],$id,true);
 
+    echo breadcrumb($_GET['act'],$id);
+
+  }else if($_GET['act']=="listas"){
+    echo breadcrumb("","","MINHAS LISTAS");
   }
 ?>
 
@@ -65,14 +71,15 @@
     </div>
     <br><br>
 
-  <?php endif?>
+    <?php endif?>
 
   <?php
+
 
     echo calls($act,$id);
 
   ?>
 
 
-</div>
+  </div>
 <?php echo html_closing();?>
