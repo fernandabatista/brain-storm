@@ -9,14 +9,11 @@
 //  echo breadcumb(0,$_GET['id']);
 	$_POST['nomea'] = $_SESSION['name']; //nomea = nome atual e depois nome atualizado
     if($_SERVER['REQUEST_METHOD']=='POST'){
-    perfil($_SESSION['cid'],$_POST['nome'], $_POST['pwd']);
+    perfil($_SESSION['cid'],$_POST['nome']);
   	$_SESSION['name'] = $_POST['nomea']= $_POST['nome'];
   		if (isset($_FILES['arquivo'])) {
   			mudafoto($_SESSION['cid'], $_FILES['arquivo']);
   	}
-  	if (isset($_POST['pwd'])) {
-				mudasenha($_SESSION['cid'], $_POST['pwd']);
-				}
   }
 ?>
 <div class='container' id='pageContent'>
@@ -28,18 +25,14 @@
 			<input name= 'nome' type="text" class="form-control center" id="user"
 			value="<?= $_POST['nomea']; ?>">
 		</div>
+	
 		<div class="form-group">
-			<?php modal('senha', 'Mudar Senha', 'Mudar Senha'); ?>
-			<label for="pwd">Nova Senha:</label>
-			<input name= 'pwd' type="password" class="form-control center" id="pwd">
-
-			<?php modal_footer('Concluido'); ?>
-		</div>
-		<div class="form-group">
-			<?php modal('foto', 'Mudar Foto', 'Mudar Foto'); ?>
 			<label for="arquivo">Avatar: </label>
+			<br><br>
+			<?php $pic = '<div class="row"><img src="'.imagem($_SESSION['user']).'"
+            class="col-sm-4 col-sm-offset-4 img-circle imgp" height="50%" width="50%" alt="Foto de perfil"></div>';
+            echo $pic; ?>
 			<input type="file"  name="arquivo">
-			<?php modal_footer('Concluido');?>
 		</div>
 		<button type="submit" class="btn btn-default">CADASTRAR</button>
 		</form>
