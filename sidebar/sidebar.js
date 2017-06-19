@@ -1,9 +1,10 @@
 
 $(document).ready(function(){
-
+  
     $("#hide").click(function(){
         $("#hide").hide();
         $("#hdnform").removeClass("hidden");
+
     });
     $("#show").click(function(){
         $("p").show();

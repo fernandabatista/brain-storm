@@ -339,8 +339,11 @@ function exerciciosLista($id,$do=false){
   lista l ON l.ID_Lista = le.ID_Lista where le.ID_Lista=$id;";
   if($do){
     $html_result.="<form action='fazerlista.php' method='post'>";
+    $html_result.="<input type='hidden' name='id' value='$id'/>";
+  
+
   }
-  $_SESSION['cid']=$id;
+
   $result = mysqli_query($conn, $sql);
   while($row = mysqli_fetch_assoc($result)) {
     $html_result.="  <div class='row'>
@@ -421,7 +424,7 @@ function professores(){
       while($row = mysqli_fetch_assoc($result)) {
         $link="adm_showprof.php?id=".$row['ID_Usuario'];
         $html_result.= "<a href='$link' class='list-group-item'><span class='lprof'>".
-                                      $row['Nome_Usuario']. "</span> <span class=' icon glyphicon glyphicon-eye-open'></span></a>";
+                                      $row['Nome_Usuario']. "</span> </a>";
       }
       echo ($html_result."</div>");
     }
@@ -458,7 +461,7 @@ function login($_email,$_pw,$adm=0){
               $_SESSION["user"] = $user["ID_Admin"];
               $_SESSION["name"] = "";
               $_SESSION["tipo"] = false;
-              header("Location: " . $path . "/adm_listap.php");
+              header("Location: adm_listap.php");
               exit();
           }else{
             $_SESSION["user"] = $user["ID_Usuario"];
@@ -466,6 +469,7 @@ function login($_email,$_pw,$adm=0){
             $_SESSION["tipo"] = $user["Aluno"];
             $_SESSION["cid"] = 0;
             $_SESSION["cloc"] = "curso";
+
             header("Location: " . $path . "/index.php?act=curso");
             exit();
           }
@@ -657,7 +661,7 @@ function comparar($id,$respostas){
   lista l ON l.ID_Lista = le.ID_Lista where le.ID_Lista=$id;";
   $result = mysqli_query($conn, $sql);
   $num_rows= mysqli_num_rows($result);
-  // echo "aaaa";
+
   $i=0;
   while($row = mysqli_fetch_assoc($result)) {
 
@@ -670,7 +674,9 @@ function comparar($id,$respostas){
       }
       $i++;
   }
-  escore($id,$c);
+  if($login)
+    escore($id,$c);
+
   $html_result.="<h2>VOCÊ ACERTOU $c DE $num_rows!</h2><br/>";
   return $html_result."<h4>CORRETA(S):</h4>$corretas
   <h4>ERRADA(S):</h4>$erradas";
@@ -717,4 +723,20 @@ function relatorio($id){
   mysqli_close($conn);
 }
 
+function prof($id){
+  require 'credentials.php';
+  $conn = mysqli_connect($servername, $username, $password, $dbname);
+  // Check connection
+  if (!$conn) {
+    die("Connection failed: " . mysqli_connect_error());
+  }
+
+  $sql = "SELECT * FROM usuario WHERE ID_Usuario=$id;";
+
+  $result = mysqli_query($conn,$sql);
+  $row = mysqli_fetch_assoc($result);
+
+  mysqli_close($conn);
+  return $row;
+}
 ?>

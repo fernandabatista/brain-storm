@@ -8,6 +8,7 @@
      if (!$conn) {
        die("Connection failed: " . mysqli_connect_error());
      }
+     mysqli_set_charset($conn,'utf8');
      $sql = "INSERT INTO lista VALUES (null,'$name',$ass)";
      mysqli_query($conn, $sql);
      $lid=mysqli_insert_id($conn); //suspeito
@@ -139,6 +140,21 @@
       (".$_SESSION['user'].",$id)";
     mysqli_query($conn, $sql);
     //echo $sql;
+    mysqli_close($conn);
+  }
+
+  function novoprof($name,$email,$pwd){
+    require "credentials.php";
+
+    $conn = mysqli_connect($servername, $username, $password, $dbname);
+    // Check connection
+    if (!$conn) {
+      die("Connection failed: " . mysqli_connect_error());
+    }
+    mysqli_set_charset($conn,"utf8");
+    $sql="INSERT INTO usuario(ID_Usuario,Nome_Usuario,Email,Senha,Aluno) values(null,'$name','$email','$pwd',false)";
+    echo $sql;
+    mysqli_query($conn,$sql);
     mysqli_close($conn);
   }
 ?>

@@ -1,6 +1,7 @@
 <?php
   require "selections.php";
   require "html_funcs.php";
+  require "authenticate.php";
   html_header("style.css");
   $result="";
   echo breadcrumb("","","PESQUISAR");

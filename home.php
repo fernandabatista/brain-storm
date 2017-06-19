@@ -1,4 +1,11 @@
-<?php require_once "links.php";?>
+<?php require_once "links.php";
+	require "authenticate.php";
+
+	if($login){
+		header("Location: index.php?act=curso");
+		exit();
+	}
+?>
 
 <!DOCTYPE html>
 <html lang="en">

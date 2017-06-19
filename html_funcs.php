@@ -18,6 +18,20 @@
     return $html_result;
   }
 
+  function admnav(){
+    require "authenticate.php";
+    require "links.php";
+    $html_result='<div id="mySidenav" class="sidenav center col-sm-0">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>';
+
+    $html_result.=
+              '<a href="'.$path.'/amd_listap.php">Home</a>
+                     <a href="logout.php">Sair</a>';
+
+    $html_result.='</div>';
+    return $html_result;
+  }
+
   function html_header($link,$nav=TRUE){
 
     require 'links.php';

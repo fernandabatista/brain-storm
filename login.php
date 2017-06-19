@@ -1,6 +1,11 @@
 <?php
-	include "authenticate.php";
-	require "links.php";	
+	require "authenticate.php";
+
+		if(isset($_SESSION['login'])){
+			header("Location: index.php?act=curso");
+			exit();
+		}
+	require "links.php";
   require "selections.php";
   require "html_funcs.php";
   html_header("style.css",false);
@@ -14,7 +19,7 @@
 		login($_POST['email'],$_POST['pwd']);
 	}
 ?>
-	<div><h3 class='slog'>LOREM IPSUM DOLOR SIT AMET</h3></div>
+	<div><h3 class='slog'></h3></div>
 	<div class='row center'>
 
 		<form class='col-sm-6 col-sm-offset-3' action='login.php' method='post'>

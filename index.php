@@ -12,6 +12,7 @@
     die("Você não tem permissão para acessar essas página.");
   }
 
+
   if($_SERVER['REQUEST_METHOD']=="POST"){
     $tagid=0;
     if(isset($_POST['tag']))
@@ -20,6 +21,8 @@
       $tagid=$_POST['id'];
 
     novo($_POST['act'],$tagid,$_POST['nome']);
+  }else if(!isset($_GET['act'])){
+    $_GET['act']="curso";
   }
 
   $id=0;
