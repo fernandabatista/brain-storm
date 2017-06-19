@@ -2,19 +2,21 @@
 
 
 
-    require_once 'credentials.php';    // Create connection
+    require_once 'credentials.php';
+    require "selections.php";  // Create connection
     $conn = mysqli_connect($servername, $username, $password, $dbname);
     // Check connection
     if (!$conn) {
       die("Connection failed: " . mysqli_connect_error());
     }
-    $sql = "INSERT INTO usuario(nome_usuario,senha,email) VALUES ('".$_POST['name']."','"
-                        .$_POST['pwd']."','".$_POST['email']."');";
+    $sql = "INSERT INTO usuario(nome_usuario,senha,email,aluno) VALUES ('".$_POST['name']."','"
+                        .$_POST['pwd']."','".$_POST['email']."',true);";
     mysqli_query($conn, $sql);
-    $lid=mysqli_insert_id($conn); //suspeito
-    $sql = "INSERT INTO aluno values(".$lid.");";
-    echo $sql;
+     //suspeito
+
     mysqli_query($conn, $sql);
     mysqli_close($conn);
+    login($_POST['email'],$_POST['pwd']);
+    header("Location: index.php?act=curso");
 
  ?>
